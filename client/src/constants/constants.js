@@ -1,0 +1,10 @@
+export const GET_ERRORS = "GET_ERRORS";
+
+export const USER_LOADING = "USER_LOADING";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
+
+export const FETCH_RECORDS = "FETCH_RECORDS";
+export const CREATE_RECORD = "CREATE_RECORD";
+export const DELETE_RECORD = "DELETE_RECORD";
+export const UPDATE_RECORD = "UPDATE_RECORD";
+export const SEARCH_RECORD = "SEARCH_RECORD";
