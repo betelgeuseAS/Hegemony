@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-// import { Button } from 'react-bootstrap';
 import classNames from 'classnames';
+// import { Button } from 'react-bootstrap';
 
 import localization from './localization';
 

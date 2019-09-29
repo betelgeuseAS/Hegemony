@@ -14,8 +14,6 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./components/profile/Profile";
-import Localize from "./components/localization/Localize"
-import localization from "./components/localization/localization"
 import DatePicker from "./components/datePicker/DatePicker";
 
 import './App.sass';
@@ -50,7 +48,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language: '',
       birthday: undefined //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
     };
   }
@@ -65,24 +62,6 @@ class App extends Component {
     this.setState({
       birthday: date
     });
-  };
-
-  // Localization:
-  setLanguage = (language) => {
-    localization.setLanguage(language);
-
-    // let gln = localization.getLanguage();
-    // let giln = localization.getInterfaceLanguage();
-
-    // localization.formatString(localization.currentDate, { //to format the passed string replacing its placeholders with the other arguments strings
-    //   month: localization.january,
-    //   day: 12,
-    //   year: 2018
-    // });
-    // localization.formatString(localization.onlyForMembers, <a href="http://login.com">{localization.login}</a>)
-    // localization.formatString(localization.iAmText, <b>{localization.bold}</b>)
-
-    this.setState({language});
   };
 
   render() {
@@ -101,12 +80,6 @@ class App extends Component {
                 </Switch>
               </div>
             </Router>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col>
-            <Localize onSetLanguage={(language) => this.setLanguage(language)} />
           </Col>
         </Row>
 

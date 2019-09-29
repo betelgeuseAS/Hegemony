@@ -1,11 +1,39 @@
 import React, { Component } from "react";
-import {Nav, Navbar} from 'react-bootstrap';
+import {Col, Nav, Navbar} from 'react-bootstrap';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 import { logoutUser } from "../../actions/auth";
 
+import Localize from "../localization/Localize";
+import localization from "../localization/localization";
+
 class NavBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      language: '',
+    };
+  }
+
+  // Localization:
+  setLanguage = (language) => {
+    localization.setLanguage(language);
+
+    // let gln = localization.getLanguage();
+    // let giln = localization.getInterfaceLanguage();
+
+    // localization.formatString(localization.currentDate, { //to format the passed string replacing its placeholders with the other arguments strings
+    //   month: localization.january,
+    //   day: 12,
+    //   year: 2018
+    // });
+    // localization.formatString(localization.onlyForMembers, <a href="http://login.com">{localization.login}</a>)
+    // localization.formatString(localization.iAmText, <b>{localization.bold}</b>)
+
+    this.setState({language});
+  };
+
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
@@ -18,6 +46,9 @@ class NavBar extends Component {
       <div className="mb-3">
         <Navbar expand="lg" bg="dark" variant="dark">
           <Navbar.Brand href="#link" target="_blank">Hegemony</Navbar.Brand>
+
+          <Localize onSetLanguage={(language) => this.setLanguage(language)} />
+
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse>
             <Nav className="mr-auto">
