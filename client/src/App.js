@@ -15,8 +15,12 @@ import Login from "./components/auth/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./components/profile/Profile";
 import DatePicker from "./components/datePicker/DatePicker";
+import { Localize } from "./components/localization/Localize";
 
 import './App.sass';
+
+import localization from "./components/localization/localization";
+
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -48,11 +52,35 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      language: '',
       birthday: undefined //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
     };
+
+    let language = localStorage.getItem('language');
+    if (language) {
+      localization.setLanguage(language);
+    }
   }
 
-  // //DatePicker:
+  // Localization:
+  setLanguage = (language) => {
+    localization.setLanguage(language);
+    this.setState({language});
+    localStorage.setItem('language', language);
+
+    // localization.getLanguage();
+    // localization.getInterfaceLanguage();
+
+    // localization.formatString(localization.currentDate, { //to format the passed string replacing its placeholders with the other arguments strings
+    //   month: localization.january,
+    //   day: 12,
+    //   year: 2018
+    // });
+    // localization.formatString(localization.onlyForMembers, <a href="http://login.com">{localization.login}</a>)
+    // localization.formatString(localization.iAmText, <b>{localization.bold}</b>)
+  };
+
+  //DatePicker:
   handleDayPickerChange = (date, {selected}) => {
     if (selected) {
       // Unselect the day if already selected:
@@ -71,7 +99,7 @@ class App extends Component {
           <Col>
             <Router>
               <div className="App">
-                <Navbar />
+                <Navbar componentLocalize={<Localize onSetLanguage={(language) => this.setLanguage(language)} />} />
                 <Route exact path="/" component={Landing} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />

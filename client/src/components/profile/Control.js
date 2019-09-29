@@ -4,6 +4,8 @@ import { Row, Col, Form, Modal } from 'react-bootstrap';
 import classNames from "classnames";
 import isEmpty from "is-empty";
 
+import localization from "../localization/localization";
+
 const Control = ({onSearchRecords, onCreateRecord, errors, user}) => {
   const [showModal, setOpen] = useState(false);
   const [values, setValues] = useState({name: '', phone: '', address: ''});
@@ -18,7 +20,7 @@ const Control = ({onSearchRecords, onCreateRecord, errors, user}) => {
       <Form className="text-left">
         <Row>
           <Col md={1}>
-            <Form.Label className="mt-2">Search:</Form.Label>
+            <Form.Label className="mt-2">{localization.search_records}:</Form.Label>
           </Col>
           <Col md={9}>
             <Form.Control
