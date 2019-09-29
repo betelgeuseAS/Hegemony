@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import {Card, Form, Modal} from "react-bootstrap";
 import classNames from "classnames";
 
-import avatar from "../../../img/avatar.png";
-
 import {RecordContext} from "../Profile";
 
 const Record = ({record}) => {
@@ -20,12 +18,11 @@ const Record = ({record}) => {
 
   return (
     <>
-      <Card style={{ width: '12rem', height: '15rem' }} className="pt-1">
+      <Card style={{ width: '20rem' }} className="pt-1">
         <button type="button" onClick={() => setOpen(true)} className="btn btn-outline-info" style={{position: "absolute", right: '0', top: '0'}}>
           <i className="fa fa-pencil" aria-hidden="true" />
         </button>
 
-        <div style={{ margin: '0 auto' }}><img src={avatar} alt="avatar" /></div>
         <Card.Body className="p-1">
           <Card.Title>{record.name}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{record.phone}</Card.Subtitle>
