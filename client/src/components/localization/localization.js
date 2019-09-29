@@ -60,7 +60,8 @@ let localization = new LocalizedStrings({
     title: 'Title',
     date_creation: "Date of creation",
     created: "Created",
-    last_edit: "Last edit"
+    last_edit: "Last edit",
+    back: "Back"
   },
   uk: {
     //language
@@ -121,7 +122,8 @@ let localization = new LocalizedStrings({
     title: 'Заголовок',
     date_creation: "Дата створення",
     created: "Створено",
-    last_edit: "Останнє редагування"
+    last_edit: "Останнє редагування",
+    back: "Назад"
   },
   ru: {
     //language
@@ -182,7 +184,8 @@ let localization = new LocalizedStrings({
     title: "Заглавие",
     date_creation: "Дата создания",
     created: "Создано",
-    last_edit: "Последнее редактирование"
+    last_edit: "Последнее редактирование",
+    back: "Назад"
   }
 });
 

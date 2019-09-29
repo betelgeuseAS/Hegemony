@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import { registerUser } from "../../actions/auth";
 import classnames from "classnames";
 
+import localization from "../localization/localization";
+
 class Register extends Component {
   constructor() {
     super();
@@ -58,7 +60,7 @@ class Register extends Component {
       <Jumbotron>
         <Link to="/" className="pull-left">
           <button type="button" className="btn btn-outline-primary">
-            <i className="fa fa-arrow-left mr-1" aria-hidden="true" />Back
+            <i className="fa fa-arrow-left mr-1" aria-hidden="true" />{localization.back}
           </button>
         </Link>
 
@@ -131,7 +133,7 @@ class Register extends Component {
             <span className="invalid-feedback">{errors.password2}</span>
           </Form.Group>
 
-          <Button variant="primary" type="submit">Sign up</Button>
+          <Button variant="primary" type="submit">{localization.sign_up}</Button>
         </Form>
       </Jumbotron>
     );

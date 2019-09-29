@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/auth";
 import classnames from "classnames";
+import localization from "../localization/localization";
 
 class Login extends Component {
   constructor() {
@@ -57,7 +58,7 @@ class Login extends Component {
       <Jumbotron>
         <Link to="/" className="pull-left">
           <button type="button" className="btn btn-outline-primary">
-            <i className="fa fa-arrow-left mr-1" aria-hidden="true" />Back
+            <i className="fa fa-arrow-left mr-1" aria-hidden="true" />{localization.back}
           </button>
         </Link>
 
@@ -100,7 +101,7 @@ class Login extends Component {
             <span className="invalid-feedback">{errors.password}{errors.passwordincorrect}</span>
           </Form.Group>
 
-          <Button variant="primary" type="submit">Login</Button>
+          <Button variant="primary" type="submit">{localization.login}</Button>
         </Form>
       </Jumbotron>
     );
