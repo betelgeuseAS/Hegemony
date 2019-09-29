@@ -17,14 +17,15 @@ class NavBar extends Component {
     return (
       <div className="mb-3">
         <Navbar expand="lg" bg="dark" variant="dark">
-          <Navbar.Brand href="#link" target="_blank">Phonebook</Navbar.Brand>
+          <Navbar.Brand href="#link" target="_blank">Hegemony</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse>
             <Nav className="mr-auto">
               {/*<Nav.Link href="#link">Features</Nav.Link>*/}
             </Nav>
             <Nav>
-              <Nav.Link href="https://github.com/betelgeuseAS/Silkway" target="_blank">GitHub</Nav.Link>
+              <Nav.Link href="https://github.com/betelgeuseAS/Retrospective" target="_blank">Retrospective</Nav.Link>
+              <Nav.Link href="https://github.com/betelgeuseAS/Hegemony" target="_blank">GitHub</Nav.Link>
               {
                 isAuthenticated ?
                 <button onClick={this.onLogoutClick} className="btn btn-outline-danger">Logout</button> :

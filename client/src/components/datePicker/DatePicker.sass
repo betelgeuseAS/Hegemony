@@ -1,0 +1,35 @@
+.datePickerSelect
+  width: 70%
+.datePickerChooseDate
+  color: #ee9ca7
+  font-weight: 700
+
+//DatePicker:
+.DayPicker-NavButton
+  //color: #ee9ca7 !important
+  height: 2.25em
+  width: 1.50em
+.DayPicker-NavButton--prev
+  background-image: none
+  &:before
+    color: #ee9ca7
+    font-weight: 700
+    font-size: 1.5em
+    content: "\f104"
+    font-family: 'FontAwesome'
+.DayPicker-NavButton--next
+  background-image: none
+  &:before
+    color: #ee9ca7
+    font-weight: 700
+    font-size: 1.5em
+    content: "\f105"
+    font-family: 'FontAwesome'
+.DayPicker-Day--today
+  color: #ee9ca7
+.DayPicker-Day--selected
+  background: #ee9ca7
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside)
+  background-color: rgba(#ee9ca7, .7)
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover
+  background-color: #ee9ca7
