@@ -11,7 +11,7 @@ const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth();
 const fromMonth = new Date(currentYear, currentMonth);
 // const toMonth = new Date(currentYear + 10, 11); //From current year and ++
-const toMonth = new Date(currentYear - 39, 11); //From current year and --
+const toMonth = new Date(currentYear - 9, 11); //From current year and --
 
 function YearMonthForm({ date, localeUtils, onChange }) {
   // const months = localeUtils.getMonths();
@@ -101,9 +101,9 @@ class DatePicker extends Component {
           )}
         />
         {date ? (
-          <p>{localization.you_have_chosen} <span className="datePickerChooseDate">{date.toLocaleDateString()}</span></p>
+          <p className="ml-4">{localization.you_have_chosen} <span className="datePickerChooseDate">{date.toLocaleDateString()}</span></p>
         ) : (
-          <p>{localization.choose_date}.</p>
+          <p className="ml-4">{localization.choose_date}</p>
         )}
       </>
     );
@@ -112,12 +112,10 @@ class DatePicker extends Component {
 
 DatePicker.propTypes = {
   onDayPickerChange: PropTypes.func.isRequired,
-  // date: PropTypes.object.isRequired
 };
 
 DatePicker.defaultProps = {
   onDayPickerChange: () => {},
-  // date: {}
 };
 
 export default DatePicker;

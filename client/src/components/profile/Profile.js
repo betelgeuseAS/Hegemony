@@ -13,8 +13,8 @@ import {
 } from "../../actions/record";
 
 
-import Control from "./Control";
-import List from "./List";
+import Control from "./control/Control";
+import List from "./records/List";
 
 export const RecordContext = React.createContext({});
 

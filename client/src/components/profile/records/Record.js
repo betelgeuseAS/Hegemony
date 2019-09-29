@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {Card, Form, Modal} from "react-bootstrap";
 import classNames from "classnames";
 
-import avatar from "../../img/avatar.png";
+import avatar from "../../../img/avatar.png";
 
-import {RecordContext} from "./Profile";
+import {RecordContext} from "../Profile";
 
 const Record = ({record}) => {
   const [showModal, setOpen] = useState(false);

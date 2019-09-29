@@ -6,15 +6,13 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/auth";
 import { store } from	'./store/configureStore';
 import { toast } from 'react-toastify';
-import moment from 'moment';
 
-import Navbar from "./components/layout/NavBar";
+import NavBar from "./components/layout/NavBar";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./components/profile/Profile";
-import DatePicker from "./components/datePicker/DatePicker";
 import { Localize } from "./components/localization/Localize";
 
 import './App.sass';
@@ -52,8 +50,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language: '',
-      birthday: undefined //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
+      language: ''
     };
 
     let language = localStorage.getItem('language');
@@ -80,18 +77,6 @@ class App extends Component {
     // localization.formatString(localization.iAmText, <b>{localization.bold}</b>)
   };
 
-  //DatePicker:
-  handleDayPickerChange = (date, {selected}) => {
-    if (selected) {
-      // Unselect the day if already selected:
-      this.setState({birthday: undefined});
-      return;
-    }
-    this.setState({
-      birthday: date
-    });
-  };
-
   render() {
     return (
       <Container>
@@ -99,7 +84,7 @@ class App extends Component {
           <Col>
             <Router>
               <div className="App">
-                <Navbar componentLocalize={<Localize onSetLanguage={(language) => this.setLanguage(language)} />} />
+                <NavBar componentLocalize={<Localize onSetLanguage={(language) => this.setLanguage(language)} />} />
                 <Route exact path="/" component={Landing} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
@@ -108,12 +93,6 @@ class App extends Component {
                 </Switch>
               </div>
             </Router>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col>
-            <DatePicker className="form-control" onDayPickerChange={(date, {selected}) => this.handleDayPickerChange(date, {selected})} date={this.state.birthday} />
           </Col>
         </Row>
       </Container>
