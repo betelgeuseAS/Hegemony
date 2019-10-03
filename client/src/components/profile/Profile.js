@@ -91,7 +91,7 @@ class Profile extends Component {
           openAlert ?
           <div className="alert alert-dismissible alert-info">
             <button type="button" onClick={this.closeAlert} className="close" data-dismiss="alert">&times;</button>
-            <h4><b>Hello, </b> <b className="text-warning">|</b>{user.name.split(" ")[0]}<b className="text-warning">|</b></h4>
+            <h4><b>Hello, </b> <span className="text-warning">{user.name.split(" ")[0]}</span></h4>
           </div> :
           false
         }

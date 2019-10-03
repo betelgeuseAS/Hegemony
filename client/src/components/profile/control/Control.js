@@ -9,15 +9,23 @@ import localization from "../../localization/localization";
 import DatePicker from "../../datePicker/DatePicker";
 import CustomToggle from "./CustomToggle";
 
-// const Control = ({onSearchRecords, onCreateRecord, errors, user}) => {
 class Control extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      //complete record:
+      complete: false,
       name: '',
       address: '',
       phone: '',
+
+      //audio Record
+      audio: false,
+
+      //voice Recognition
+      voice: false,
+
+
       birthday: undefined //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
     };
   }
@@ -39,9 +47,26 @@ class Control extends Component {
     });
   };
 
+  handleToggleModal = (type, value) => {
+    switch(type) {
+      case 'complete':
+        this.setState({complete: value});
+        break;
+      case 'audio':
+        this.setState({audio: value});
+        break;
+      case 'voice':
+        this.setState({voice: value});
+        break;
+      default:
+        this.setState({complete: false, audio: false, voice: false});
+        break;
+    }
+  };
+
   render() {
     const {onSearchRecords, onCreateRecord, errors, user} = this.props;
-    const {open, name, address, phone} = this.state;
+    const {complete, open, name, address, phone} = this.state;
     return (
       <div>
         <Form className="text-left">
@@ -71,14 +96,23 @@ class Control extends Component {
               </Dropdown>
             </Col>
 
-
             <Col md={2} className="text-right">
-              <button type="button" onClick={() => this.setState({open: true})} className="btn btn-outline-info"><i className="fa fa-plus mr-1" aria-hidden="true" />Create</button>
+              <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  <i className="fa fa-plus mr-1" aria-hidden="true" />Create
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => this.handleToggleModal('complete', true)}>Complete Record</Dropdown.Item>
+                  <Dropdown.Item>Audio Record</Dropdown.Item>
+                  <Dropdown.Item>Voice Recognition</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </Col>
           </Row>
         </Form>
 
-        <Modal show={open} onHide={() => {this.setState({open: false});}} size={'lg'}>
+        <Modal show={complete} onHide={() => this.handleToggleModal('complete', false)} size={'lg'}>
           <Modal.Header closeButton>
             <Modal.Title>Add new record</Modal.Title>
           </Modal.Header>
@@ -128,7 +162,7 @@ class Control extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <button className="btn btn-outline-danger" onClick={() => {this.setState({open: false});}}>Close</button>
+            <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('complete', false)}>Close</button>
             <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, address});}}>Save</button>
           </Modal.Footer>
         </Modal>

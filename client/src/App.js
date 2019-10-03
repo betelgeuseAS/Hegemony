@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch  } from "react-router-dom";
-import {Container, Row, Col} from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/auth";
