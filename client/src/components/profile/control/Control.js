@@ -8,6 +8,8 @@ import localization from "../../localization/localization";
 
 import DatePicker from "../../datePicker/DatePicker";
 import CustomToggle from "./CustomToggle";
+import Recorder from "../../audioRecorder/Recorder";
+import Speech from "../../speechRecognition/Speech";
 
 class Control extends Component {
   constructor(props) {
@@ -66,7 +68,7 @@ class Control extends Component {
 
   render() {
     const {onSearchRecords, onCreateRecord, errors, user} = this.props;
-    const {complete, open, name, address, phone} = this.state;
+    const {complete, audio, voice, name, address, phone} = this.state;
     return (
       <div>
         <Form className="text-left">
@@ -104,8 +106,8 @@ class Control extends Component {
 
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => this.handleToggleModal('complete', true)}>Complete Record</Dropdown.Item>
-                  <Dropdown.Item>Audio Record</Dropdown.Item>
-                  <Dropdown.Item>Voice Recognition</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.handleToggleModal('audio', true)}>Audio Record</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.handleToggleModal('voice', true)}>Voice Recognition</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Col>
@@ -114,7 +116,7 @@ class Control extends Component {
 
         <Modal show={complete} onHide={() => this.handleToggleModal('complete', false)} size={'lg'}>
           <Modal.Header closeButton>
-            <Modal.Title>Add new record</Modal.Title>
+            <Modal.Title>Add new <strong className="text-warning">Complete Record</strong></Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
@@ -163,6 +165,36 @@ class Control extends Component {
           </Modal.Body>
           <Modal.Footer>
             <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('complete', false)}>Close</button>
+            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, address});}}>Save</button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={audio} onHide={() => this.handleToggleModal('audio', false)} size={'lg'}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add new <strong className="text-warning">Audio Record</strong></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group>
+                <Recorder />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('audio', false)}>Close</button>
+            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, address});}}>Save</button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={voice} onHide={() => this.handleToggleModal('voice', false)} size={'lg'}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add new <strong className="text-warning">Voice Recognition</strong></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Speech />
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('voice', false)}>Close</button>
             <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, address});}}>Save</button>
           </Modal.Footer>
         </Modal>
