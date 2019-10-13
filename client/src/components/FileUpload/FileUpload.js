@@ -73,8 +73,8 @@ class FileUpload extends Component {
           ignoredFiles={['.ds_store', 'thumbs.db', 'desktop.ini']}
           // Server configuration
           files={this.state.files}
-          instantUpload={true}
-          //server="/api"
+          instantUpload={false}//Immediately upload new files to the server (button upload)
+          server="http://localhost:3000/records/upload"
           chunkUploads={false}
           chunkForce={false}
           chunkSize={5000000}
