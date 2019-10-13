@@ -6,6 +6,7 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/auth";
 import { store } from	'./store/configureStore';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 import NavBar from "./components/layout/NavBar";
 import Landing from "./components/layout/Landing";
@@ -38,6 +39,29 @@ if (localStorage.jwtToken) {
     window.location.href = "./login";
   }
 }
+
+// axios:
+// Add a request interceptor
+axios.interceptors.request.use(function (config) {
+  // Do something before request is sent
+  return config;
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error);
+});
+// Add a response interceptor
+axios.interceptors.response.use(function (response) {
+  // Do something with response data
+  return response;
+}, function (error) {
+  // Do something with response error
+  if (error.response.status >= 400 && error.response.status < 500) {
+    toast.error(`${localization.error}. ${localization.not_auth}`);
+  } else if (error.response.status >= 500) {
+    toast.error(`${localization.error}. ${localization.server_error}`);
+  }
+  return Promise.reject(error);
+});
 
 // toast:
 // Call it once in your app. At the root of your app is the best place
