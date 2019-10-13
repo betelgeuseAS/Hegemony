@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Dropzone from 'react-dropzone';
+import Dropzone from 'react-dropzone'; //npm i react-dropzone
 
 class DropZone extends Component {
   constructor() {

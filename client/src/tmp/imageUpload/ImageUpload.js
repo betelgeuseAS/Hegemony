@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ImageUploader from 'react-images-upload';
+import ImageUploader from 'react-images-upload'; //npm i react-images-upload
 
 class ImageUpload extends Component {
 
