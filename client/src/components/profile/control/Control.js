@@ -12,6 +12,7 @@ import Recorder from "../../audioRecorder/Recorder";
 import Speech from "../../speechRecognition/Speech";
 import TextEditor from "../../textEditor/TextEditor"
 import { TypeAhead } from "../../typeAhead/TypeAhead";
+import { FileUpload } from "../../fileUpload/FileUpload";
 
 class Control extends Component {
   constructor(props) {
@@ -20,9 +21,8 @@ class Control extends Component {
       //complete record:
       complete: false,
       name: '',
-      address: '',
-      phone: '',
       tags: [],
+      files: [],
 
       //audio Record
       audio: false,
@@ -73,9 +73,13 @@ class Control extends Component {
     this.setState({tags});
   };
 
+  setFiles = (files) => {
+    this.setState({files});
+  };
+
   render() {
     const {onSearchRecords, onCreateRecord, errors, user} = this.props;
-    const {complete, audio, voice, name, address, phone, tags} = this.state;
+    const {complete, audio, voice, name, tags, files} = this.state;
     
     return (
       <div>
@@ -122,7 +126,7 @@ class Control extends Component {
           </Row>
         </Form>
 
-        <Modal show={!complete} onHide={() => this.handleToggleModal('complete', false)} size={'lg'}>
+        <Modal show={complete} onHide={() => this.handleToggleModal('complete', false)} size={'lg'}>
           <Modal.Header closeButton>
             <Modal.Title>Add new <strong className="text-warning">Complete Record</strong></Modal.Title>
           </Modal.Header>
@@ -143,38 +147,18 @@ class Control extends Component {
               </Form.Group>
 
               <Form.Group>
-                <Form.Label>Phone</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter phone"
-                  onChange={this.handleInputChange}
-                  value={phone}
-                  name="phone"
-                  className={classNames("", {
-                    'is-invalid': errors.phone
-                  })}/>
-                <span className="invalid-feedback">{errors.phone}</span>
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter address"
-                  onChange={this.handleInputChange}
-                  value={address}
-                  name="address"
-                  className={classNames("", {
-                    'is-invalid': errors.address
-                  })}/>
-                <span className="invalid-feedback">{errors.address}</span>
-              </Form.Group>
-
-              <Form.Group>
                 <Form.Label>{localization.what_your_mind}</Form.Label>
                 <TextEditor />
                 {errors.content === 'Content field is required' && (<div className="invalid-feedback">{localization.content_required}</div>)}
                 <Form.Text className="text-muted">{localization.not_forgotten_anything}</Form.Text>
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Files</Form.Label>
+                <FileUpload
+                  files={files}
+                  onSetFiles={this.setFiles}
+                />
               </Form.Group>
 
               <Form.Group>
@@ -187,9 +171,10 @@ class Control extends Component {
               </Form.Group>
             </Form>
           </Modal.Body>
+
           <Modal.Footer>
             <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('complete', false)}>Close</button>
-            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, address});}}>Save</button>
+            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name/*, address*/});}}>Save</button>
           </Modal.Footer>
         </Modal>
 
@@ -206,7 +191,7 @@ class Control extends Component {
           </Modal.Body>
           <Modal.Footer>
             <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('audio', false)}>Close</button>
-            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, address});}}>Save</button>
+            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name/*, address*/});}}>Save</button>
           </Modal.Footer>
         </Modal>
 
@@ -219,7 +204,7 @@ class Control extends Component {
           </Modal.Body>
           <Modal.Footer>
             <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('voice', false)}>Close</button>
-            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, address});}}>Save</button>
+            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name/*, address*/});}}>Save</button>
           </Modal.Footer>
         </Modal>
       </div>
