@@ -15,6 +15,10 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  tags: {
+    type: [String],
+    default: []
+  },
   created: {
     type: Date,
     default: Date.now

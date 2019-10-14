@@ -11,6 +11,7 @@ import CustomToggle from "./CustomToggle";
 import Recorder from "../../audioRecorder/Recorder";
 import Speech from "../../speechRecognition/Speech";
 import TextEditor from "../../textEditor/TextEditor"
+import { TypeAhead } from "../../typeAhead/TypeAhead";
 
 class Control extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class Control extends Component {
       name: '',
       address: '',
       phone: '',
+      tags: [],
 
       //audio Record
       audio: false,
@@ -67,9 +69,14 @@ class Control extends Component {
     }
   };
 
+  setTags = (tags) => {
+    this.setState({tags});
+  };
+
   render() {
     const {onSearchRecords, onCreateRecord, errors, user} = this.props;
-    const {complete, audio, voice, name, address, phone} = this.state;
+    const {complete, audio, voice, name, address, phone, tags} = this.state;
+    
     return (
       <div>
         <Form className="text-left">
@@ -115,7 +122,7 @@ class Control extends Component {
           </Row>
         </Form>
 
-        <Modal show={complete} onHide={() => this.handleToggleModal('complete', false)} size={'lg'}>
+        <Modal show={!complete} onHide={() => this.handleToggleModal('complete', false)} size={'lg'}>
           <Modal.Header closeButton>
             <Modal.Title>Add new <strong className="text-warning">Complete Record</strong></Modal.Title>
           </Modal.Header>
@@ -168,6 +175,15 @@ class Control extends Component {
                 <TextEditor />
                 {errors.content === 'Content field is required' && (<div className="invalid-feedback">{localization.content_required}</div>)}
                 <Form.Text className="text-muted">{localization.not_forgotten_anything}</Form.Text>
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Tags</Form.Label>
+                <TypeAhead
+                  tags={user.tags}
+                  selects={tags}
+                  onSetTags={this.setTags}
+                />
               </Form.Group>
             </Form>
           </Modal.Body>
