@@ -13,6 +13,7 @@ import Speech from "../../speechRecognition/Speech";
 import TextEditor from "../../textEditor/TextEditor"
 import { TypeAhead } from "../../typeAhead/TypeAhead";
 import { FileUpload } from "../../fileUpload/FileUpload";
+import Weather from "../../weather/Weather";
 
 class Control extends Component {
   constructor(props) {
@@ -168,6 +169,11 @@ class Control extends Component {
                   selects={tags}
                   onSetTags={this.setTags}
                 />
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Weather</Form.Label>
+                <Weather />
               </Form.Group>
             </Form>
           </Modal.Body>
