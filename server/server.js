@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const cors = require('cors');
-const proxy = require('http-proxy-middleware');
+// const proxy = require('http-proxy-middleware');
 
 const Users = require("./routes/Users");
 const Records = require("./routes/Records");
@@ -15,14 +15,14 @@ app.use(cors());
 
 // TODO Write own proxy
 // Proxy server
-let proxyOptions = {
-  target: 'http://localhost:8080',
-  // changeOrigin: true,
-  onProxyRes: function (proxyRes, req, res) {
-    proxyRes.headers['Access-Control-Allow-Origin'] = '*';
-  }
-};
-app.use('/api', proxy('/api', proxyOptions));
+// let proxyOptions = {
+//   target: 'http://localhost:8080',
+//   // changeOrigin: true,
+//   onProxyRes: function (proxyRes, req, res) {
+//     proxyRes.headers['Access-Control-Allow-Origin'] = '*';
+//   }
+// };
+// app.use('/api', proxy('/api', proxyOptions));
 
 // Bodyparser middleware
 app.use(
