@@ -6,7 +6,7 @@ const RecordSchema = new Schema({
   type: {
     type: String,
     required: true,
-    default: 'complete'
+    default: 'text'
   },
   name: {
     type: String,
@@ -17,8 +17,6 @@ const RecordSchema = new Schema({
     type: [String],
     default: []
   },
-  location: String,
-  weather: String,
   files: {
     type: [String],
     default: []

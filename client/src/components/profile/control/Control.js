@@ -18,8 +18,8 @@ class Control extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //complete record:
-      complete: false,
+      //text record:
+      text: false,
       name: '',
       tags: [],
       files: [],
@@ -54,8 +54,8 @@ class Control extends Component {
 
   handleToggleModal = (type, value) => {
     switch(type) {
-      case 'complete':
-        this.setState({complete: value});
+      case 'text':
+        this.setState({text: value});
         break;
       case 'audio':
         this.setState({audio: value});
@@ -64,7 +64,7 @@ class Control extends Component {
         this.setState({voice: value});
         break;
       default:
-        this.setState({complete: false, audio: false, voice: false});
+        this.setState({text: false, audio: false, voice: false});
         break;
     }
   };
@@ -79,7 +79,7 @@ class Control extends Component {
 
   render() {
     const {onSearchRecords, onCreateRecord, errors, user} = this.props;
-    const {complete, audio, voice, name, tags, files} = this.state;
+    const {text, audio, voice, name, tags, files} = this.state;
 
     return (
       <div>
@@ -117,7 +117,7 @@ class Control extends Component {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => this.handleToggleModal('complete', true)}>Complete Record</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.handleToggleModal('text', true)}>Text Record</Dropdown.Item>
                   <Dropdown.Item onClick={() => this.handleToggleModal('audio', true)}>Audio Record</Dropdown.Item>
                   <Dropdown.Item onClick={() => this.handleToggleModal('voice', true)}>Voice Recognition</Dropdown.Item>
                 </Dropdown.Menu>
@@ -126,9 +126,9 @@ class Control extends Component {
           </Row>
         </Form>
 
-        <Modal show={complete} onHide={() => this.handleToggleModal('complete', false)} size={'lg'}>
+        <Modal show={text} onHide={() => this.handleToggleModal('text', false)} size={'lg'}>
           <Modal.Header closeButton>
-            <Modal.Title>Add new <strong className="text-warning">Complete Record</strong></Modal.Title>
+            <Modal.Title>Add new <strong className="text-warning">Text Record</strong></Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
@@ -173,7 +173,7 @@ class Control extends Component {
           </Modal.Body>
 
           <Modal.Footer>
-            <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('complete', false)}>Close</button>
+            <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('text', false)}>Close</button>
             <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name/*, address*/});}}>Save</button>
           </Modal.Footer>
         </Modal>
