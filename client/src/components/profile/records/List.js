@@ -9,7 +9,7 @@ const List = ({records}) => {
       <ul style={{listStyleType: 'none', margin: '0', padding: 0}}>
         {
           records.map(item => (
-            <li style={{display: 'inline-block', margin: '7px 10px 7px 10px'}} key={item.phone}>
+            <li style={{display: 'inline-block', margin: '7px 10px 7px 10px'}} key={item.id}>
               <Record record={item} />
             </li>
           ))

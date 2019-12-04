@@ -21,8 +21,9 @@ class Control extends Component {
       //text record:
       text: false,
       name: '',
-      tags: [],
+      content: '',
       files: [],
+      tags: [],
 
       //audio Record
       audio: false,
@@ -69,6 +70,12 @@ class Control extends Component {
     }
   };
 
+  //Text Editor:
+  setTextEditor = (data) => {
+    this.setState({content: data});
+  };
+
+  //Type Ahead:
   setTags = (tags) => {
     this.setState({tags});
   };
@@ -79,7 +86,7 @@ class Control extends Component {
 
   render() {
     const {onSearchRecords, onCreateRecord, errors, user} = this.props;
-    const {text, audio, voice, name, tags, files} = this.state;
+    const {text, content, audio, voice, name, tags, files} = this.state;
 
     return (
       <div>
@@ -148,7 +155,7 @@ class Control extends Component {
 
               <Form.Group>
                 <Form.Label>{localization.what_your_mind}</Form.Label>
-                <TextEditor />
+                <TextEditor onChangeContent={(data) => this.setTextEditor(data)} />
                 {errors.content === 'Content field is required' && (<div className="invalid-feedback">{localization.content_required}</div>)}
                 <Form.Text className="text-muted">{localization.not_forgotten_anything}</Form.Text>
               </Form.Group>
@@ -174,7 +181,7 @@ class Control extends Component {
 
           <Modal.Footer>
             <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('text', false)}>Close</button>
-            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name/*, address*/});}}>Save</button>
+            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, content, files, tags});}}>Save</button>
           </Modal.Footer>
         </Modal>
 

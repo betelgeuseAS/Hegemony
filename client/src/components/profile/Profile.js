@@ -57,6 +57,7 @@ class Profile extends Component {
   };
 
   createRecord = (data) => {
+    console.log(data);
     this.props.createRecord(data, this.fetchRecords);
   };
 
