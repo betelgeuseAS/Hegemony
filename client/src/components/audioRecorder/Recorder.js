@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Button } from "react-bootstrap";
 import { ReactMic } from 'react-mic';
 
+import './Recorder.sass';
+
 export class Recorder extends Component {
   constructor(props){
     super(props);
@@ -58,12 +60,11 @@ export class Recorder extends Component {
 
     return(
       <div>
-        <h1>Recorder</h1>
         <ReactMic
           className="oscilloscope"
           record={isRecording}
           pause={isPaused}
-          backgroundColor="#FF4081"
+          backgroundColor="#fff"
           visualSetting="sinewave"
           audioBitsPerSecond= {128000}
           onStop={this.onStop}

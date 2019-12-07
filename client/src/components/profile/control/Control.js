@@ -18,21 +18,16 @@ class Control extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //text record:
-      text: false,
+      text: false, //text record
+      audio: false, //audio Record
+      voice: false, //voice Recognition
+
       name: '',
       content: '',
       files: [],
       tags: [],
 
-      //audio Record
-      audio: false,
-
-      //voice Recognition
-      voice: false,
-
-
-      birthday: undefined //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
+      date: undefined //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
     };
   }
 
@@ -45,11 +40,11 @@ class Control extends Component {
   handleDayPickerChange = (date, {selected}) => {
     if (selected) {
       // Unselect the day if already selected:
-      this.setState({birthday: undefined});
+      this.setState({date: undefined});
       return;
     }
     this.setState({
-      birthday: date
+      date: date
     });
   };
 
@@ -86,7 +81,7 @@ class Control extends Component {
 
   render() {
     const {onSearchRecords, onCreateRecord, errors, user} = this.props;
-    const {text, content, audio, voice, name, tags, files} = this.state;
+    const {text, audio, voice, content, name, tags, files, date} = this.state;
 
     return (
       <div>
@@ -112,7 +107,7 @@ class Control extends Component {
                 <Dropdown.Toggle as={CustomToggle} id="dropdown-basic">test</Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <DatePicker className="form-control" onDayPickerChange={(date, {selected}) => this.handleDayPickerChange(date, {selected})} date={this.state.birthday} />
+                  <DatePicker className="form-control" onDayPickerChange={(date, {selected}) => this.handleDayPickerChange(date, {selected})} date={date} />
                 </Dropdown.Menu>
               </Dropdown>
             </Col>
@@ -185,7 +180,7 @@ class Control extends Component {
           </Modal.Footer>
         </Modal>
 
-        <Modal show={audio} onHide={() => this.handleToggleModal('audio', false)} size={'lg'}>
+        <Modal show={!audio} onHide={() => this.handleToggleModal('audio', false)} size={'lg'}>
           <Modal.Header closeButton>
             <Modal.Title>Add new <strong className="text-warning">Audio Record</strong></Modal.Title>
           </Modal.Header>
