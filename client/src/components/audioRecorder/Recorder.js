@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Button } from "react-bootstrap";
 import { ReactMic } from 'react-mic';
 
+import Audio from '../audio/Audio';
+
 import './Recorder.sass';
 
 export class Recorder extends Component {
@@ -74,23 +76,22 @@ export class Recorder extends Component {
           onBlock={this.onBlock} //Only available in React-Mic-Plus
           onPause={this.onPause} //Only available in React-Mic-Plus
           strokeColor="#000000" />
-        <div>
-          <audio ref="audioSource" controls="controls" src={blobURL} />
-        </div>
+
+        {/*<div>*/}
+        {/*  <audio ref="audioSource" controls="controls" src={blobURL} />*/}
+        {/*</div>*/}
+
+        <Audio src={blobURL} />
 
         <Button
           variant="primary"
           onClick={this.startOrPauseRecording}>
           {/*{ (isRecording && !isPaused )? <PauseIcon /> : <MicrophoneOn /> }*/}
-          { (isRecording && !isPaused )? "Pause" : "Start" }
-        </Button>
+          { (isRecording && !isPaused )? "Pause" : "Start" }</Button>
         <Button
           variant="danger"
           disabled={!isRecording}
-          onClick={this.stopRecording}
-        >
-          Stop
-        </Button>
+          onClick={this.stopRecording}>Stop</Button>
       </div>
     );
   }
