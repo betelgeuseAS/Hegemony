@@ -1,10 +1,30 @@
 @import "~bootswatch/dist/sketchy/variables"
 
-.audio
-  text-align: center
-
-audio::-webkit-media-controls-panel
-  background: white
+.medias
+  display: flex
+  flex-direction: row
+  flex-wrap: nowrap
+  justify-content: flex-start
+  align-items: center
+  margin-top: 25px
+  .media-controls
+    img
+      width: 20px
+      height: auto
+      margin-right: 10px
+      cursor: pointer
+      &.disabled
+        opacity: .4
+        //pointer-events: none
+  .media-time
+    color: $yellow
+    white-space: nowrap
+    margin-right: 10px
+    padding-top: 5px
+  .media-range
+    width: 100%
+    .custom-range
+      padding-top: 10px
 
 audio::-webkit-media-controls-mute-button
 

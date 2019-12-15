@@ -77,21 +77,18 @@ export class Recorder extends Component {
           onPause={this.onPause} //Only available in React-Mic-Plus
           strokeColor="#000000" />
 
-        {/*<div>*/}
-        {/*  <audio ref="audioSource" controls="controls" src={blobURL} />*/}
-        {/*</div>*/}
-
-        <Audio src={blobURL} />
-
         <Button
           variant="primary"
           onClick={this.startOrPauseRecording}>
           {/*{ (isRecording && !isPaused )? <PauseIcon /> : <MicrophoneOn /> }*/}
-          { (isRecording && !isPaused )? "Pause" : "Start" }</Button>
+          { (isRecording && !isPaused )? "Pause recording" : "Make a record" }</Button>
         <Button
           variant="danger"
           disabled={!isRecording}
-          onClick={this.stopRecording}>Stop</Button>
+          onClick={this.stopRecording}>Stop recording</Button>
+
+        {/*<Audio src={blobURL} />*/}
+        <audio controls="controls" src={blobURL} />
       </div>
     );
   }

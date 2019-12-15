@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from "classnames";
 
 import './Audio.sass';
 
-// const Audio = ({src}) => {
-//   return (
-//     <div className="audio">
-//       <audio controls="controls" src={src} />
-//       <audio controls="controls" src={'https://ia802908.us.archive.org/0/items/mythium/AC_TSOWAfucked_up.mp3'} />
-//     </div>
-//   );
-// };
-
-const campfireStory = "https://ia802908.us.archive.org/0/items/mythium/SSB12_28_03_T.mp3";
-const bootingUp = "https://ia802908.us.archive.org/0/items/mythium/AC_TSOWAfucked_up.mp3";
+import play from '../../img/media/play.svg';
+import pause from '../../img/media/pause.svg';
 
 function getTime(time) {
   if (!isNaN(time)) {
@@ -24,12 +16,16 @@ function getTime(time) {
 }
 
 class Audio extends Component {
-  state = {
-    selectedTrack: null,
-    player: "stopped",
-    currentTime: null,
-    duration: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      ready: false,
+      play: false,
+      currentTime: null,
+      duration: null
+    };
+  }
+
 
   componentDidMount() {
     this.player.addEventListener("timeupdate", e => {
@@ -45,171 +41,80 @@ class Audio extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.selectedTrack !== prevState.selectedTrack) {
-      let track;
-      switch (this.state.selectedTrack) {
-        case "Campfire Story":
-          track = campfireStory;
-          break;
-        case "Booting Up":
-          track = bootingUp;
-          break;
-        default:
-          break;
-      }
-      if (track) {
-        this.player.src = track;
-        this.player.play();
-        this.setState({ player: "playing", duration: this.player.duration });
-      }
+    if (this.props.src !== prevProps.src) {
+      this.player.src = this.props.src;
+      this.setState({ ready: !this.state.ready, duration: this.player.duration });
     }
-    if (this.state.player !== prevState.player) {
-      if (this.state.player === "paused") {
-        this.player.pause();
-      } else if (this.state.player === "stopped") {
-        this.player.pause();
-        this.player.currentTime = 0;
-        this.setState({ selectedTrack: null });
-      } else if (
-        this.state.player === "playing" &&
-        prevState.player === "paused"
-      ) {
-        this.player.play();
-      }
+
+    if (this.state.play !== prevState.play) {
+      this.state.play ? this.player.play() : this.player.pause();
     }
+
+    this.player.addEventListener("ended", e => {
+      this.player.currentTime = 0;
+      this.setState({play: false});
+    });
   }
 
-  render() {
-    const list = [
-      { id: 1, title: "Campfire Story" },
-      { id: 2, title: "Booting Up" }
-    ].map(item => {
-      return (
-        <li
-          key={item.id}
-          onClick={() => this.setState({ selectedTrack: item.title })}
-        >
-          {item.title}
-        </li>
-      );
-    });
+  handleAudio = () => {
+    this.setState({play: !this.state.play});
 
+    // this.player.pause();
+    // this.player.play();
+  };
+
+  handleChangeTime = (e) => {
+    this.setState({currentTime: e.target.value});
+    this.player.currentTime = e.target.value;
+  };
+
+  render() {
     const currentTime = getTime(this.state.currentTime);
     const duration = getTime(this.state.duration);
 
+    console.log(this.state.currentTime);
+    console.log(this.state.duration);
     return (
       <>
-        <ul>{list}</ul>
-        <div>
-          {this.state.player === "paused" && (
-            <button onClick={() => this.setState({ player: "playing" })}>
-              Play
-            </button>
-          )}
-          {this.state.player === "playing" && (
-            <button onClick={() => this.setState({ player: "paused" })}>
-              Pause
-            </button>
-          )}
-          {this.state.player === "playing" || this.state.player === "paused" ? (
-            <button onClick={() => this.setState({ player: "stopped" })}>
-              Stop
-            </button>
-          ) : (
-            ""
-          )}
-        </div>
-        {this.state.player === "playing" || this.state.player === "paused" ? (
-          <div>
-            {currentTime} / {duration}
+        <div className="medias">
+          <div className="media-controls">
+            <img
+              src={this.state.play ? pause : play}
+              alt="play/pause"
+              onClick={this.handleAudio}
+              className={classNames({'disabled': !this.state.ready})}
+            />
           </div>
-        ) : (
-          ""
-        )}
+
+          <div className="media-time">
+            <span className={classNames({'text-muted': !this.state.ready})}>{currentTime} / {duration}</span>
+          </div>
+
+          <div className="media-range">
+            <input
+              type="range"
+              className="custom-range"
+              disabled={!this.state.ready}
+              min="0"
+              max={this.state.duration ? this.state.duration : 0}
+              value={this.state.currentTime ? this.state.currentTime : 0}
+              onChange={(value) => this.handleChangeTime(value)}
+            />
+          </div>
+        </div>
+
         <audio ref={ref => (this.player = ref)} />
       </>
     );
   }
 }
 
-// Audio.propTypes = {
-//   onSearchRecords: PropTypes.string.isRequired
-// };
-//
-// Audio.defaultProps = {
-//   src: ''
-// };
+Audio.propTypes = {
+  src:PropTypes.string.isRequired
+};
+
+Audio.defaultProps = {
+  src: ''
+};
 
 export default Audio;
-
-
-
-
-
-// ES6 class properties syntax
-// class Music extends React.Component {
-//   state = {
-//     play: false
-//   }
-//   audio = new Audio(this.props.url)
-//
-//   componentDidMount() {
-//     audio.addEventListener('ended', () => this.setState({ play: false }));
-//   }
-//
-//   componentWillUnmount() {
-//     audio.removeEventListener('ended', () => this.setState({ play: false }));
-//   }
-//
-//   togglePlay = () => {
-//     this.setState({ play: !this.state.play }, () => {
-//       this.state.play ? this.audio.play() : this.audio.pause();
-//     });
-//   }
-//
-//   render() {
-//     return (
-//       <div>
-//         <button onClick={this.togglePlay}>{this.state.play ? 'Pause' : 'Play'}</button>
-//       </div>
-//     );
-//   }
-// }
-// export default Music;
-
-
-// Hooks version (React 16.8+):
-// import React, { useState, useEffect } from "react";
-//
-// const useAudio = url => {
-//   const [audio] = useState(new Audio(url));
-//   const [playing, setPlaying] = useState(false);
-//
-//   const toggle = () => setPlaying(!playing);
-//
-//   useEffect(() => {
-//       playing ? audio.play() : audio.pause();
-//     },
-//     [playing]
-//   );
-//
-//   useEffect(() => {
-//     audio.addEventListener('ended', () => setPlaying(false));
-//     return () => {
-//       audio.removeEventListener('ended', () => setPlaying(false));
-//     };
-//   }, []);
-//
-//   return [playing, toggle];
-// };
-//
-// const Player = ({ url }) => {
-//   const [playing, toggle] = useAudio(url);
-//
-//   return (
-//     <div>
-//       <button onClick={toggle}>{playing ? "Pause" : "Play"}</button>
-//     </div>
-//   );
-// };
-// export default Player;
