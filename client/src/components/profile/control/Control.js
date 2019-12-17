@@ -26,6 +26,7 @@ class Control extends Component {
       content: '',
       files: [],
       tags: [],
+      blob: {},
 
       date: undefined //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
     };
@@ -79,9 +80,13 @@ class Control extends Component {
     this.setState({files});
   };
 
+  setAudio = (blob) => {
+    this.setState({blob});
+  };
+
   render() {
     const {onSearchRecords, onCreateRecord, errors, user} = this.props;
-    const {text, audio, voice, content, name, tags, files, date} = this.state;
+    const {text, audio, voice, content, name, tags, files, date, blob} = this.state;
 
     return (
       <div>
@@ -180,20 +185,46 @@ class Control extends Component {
           </Modal.Footer>
         </Modal>
 
-        <Modal show={!audio} onHide={() => this.handleToggleModal('audio', false)} size={'lg'}>
+        <Modal show={audio} onHide={() => this.handleToggleModal('audio', false)} size={'lg'}>
           <Modal.Header closeButton>
             <Modal.Title>Add new <strong className="text-warning">Audio Record</strong></Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
               <Form.Group>
-                <Recorder />
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter name"
+                  onChange={this.handleInputChange}
+                  value={name}
+                  name="name"
+                  className={classNames("", {
+                    'is-invalid': errors.name
+                  })}/>
+                <span className="invalid-feedback">{errors.name}</span>
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Record</Form.Label>
+                <Recorder
+                  onSetAudio={this.setAudio}
+                />
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Tags</Form.Label>
+                <TypeAhead
+                  tags={user.tags}
+                  selects={tags}
+                  onSetTags={this.setTags}
+                />
               </Form.Group>
             </Form>
           </Modal.Body>
           <Modal.Footer>
             <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('audio', false)}>Close</button>
-            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name/*, address*/});}}>Save</button>
+            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, blob, tags});}}>Save</button>
           </Modal.Footer>
         </Modal>
 
