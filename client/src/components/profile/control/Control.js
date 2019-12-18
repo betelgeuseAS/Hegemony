@@ -27,6 +27,7 @@ class Control extends Component {
       files: [],
       tags: [],
       blob: {},
+      recognition: '',
 
       date: undefined //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
     };
@@ -84,9 +85,13 @@ class Control extends Component {
     this.setState({blob});
   };
 
+  setVoice = (recognition) => {
+    this.setState({recognition});
+  };
+
   render() {
     const {onSearchRecords, onCreateRecord, errors, user} = this.props;
-    const {text, audio, voice, content, name, tags, files, date, blob} = this.state;
+    const {text, audio, voice, content, name, tags, files, date, blob, recognition} = this.state;
 
     return (
       <div>
@@ -233,11 +238,41 @@ class Control extends Component {
             <Modal.Title>Add new <strong className="text-warning">Voice Recognition</strong></Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Speech />
+            <Form>
+              <Form.Group>
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter name"
+                  onChange={this.handleInputChange}
+                  value={name}
+                  name="name"
+                  className={classNames("", {
+                    'is-invalid': errors.name
+                  })}/>
+                <span className="invalid-feedback">{errors.name}</span>
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Recognition</Form.Label>
+                <Speech
+                  onSetVoice={this.setVoice}
+                />
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Tags</Form.Label>
+                <TypeAhead
+                  tags={user.tags}
+                  selects={tags}
+                  onSetTags={this.setTags}
+                />
+              </Form.Group>
+            </Form>
           </Modal.Body>
           <Modal.Footer>
             <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('voice', false)}>Close</button>
-            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name/*, address*/});}}>Save</button>
+            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, recognition, tags});}}>Save</button>
           </Modal.Footer>
         </Modal>
       </div>
