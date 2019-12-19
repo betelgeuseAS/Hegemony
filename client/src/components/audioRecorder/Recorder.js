@@ -37,16 +37,18 @@ export class Recorder extends Component {
   };
 
   onStart=() => {
-    console.log('You can tap into the onStart callback');
+    // console.log('You can tap into the onStart callback');
   };
 
   onStop= (blobObject) => {
-    console.log('recordedBlob is: ', blobObject);
+    // console.log('recordedBlob is: ', blobObject);
     this.setState({ blobURL : blobObject.blobURL });
+
+    this.props.onSetAudio(blobObject);
   };
 
   onData(recordedBlob){
-    console.log('ONDATA CALL IS BEING CALLED! ', recordedBlob);
+    // console.log('ONDATA CALL IS BEING CALLED! ', recordedBlob);
   };
 
   onBlock() {
@@ -88,12 +90,20 @@ export class Recorder extends Component {
           onClick={this.stopRecording}>Stop recording</Button>
 
         {/*<Audio src={blobURL} />*/}
-        <audio controls="controls" src={blobURL} />
+        <div className="audio-wrapper">
+          <audio controls="controls" src={blobURL} />
+        </div>
       </div>
     );
   }
 }
 
-Recorder.propTypes = {};
+Recorder.propTypes = {
+  onSetAudio: PropTypes.func.isRequired
+};
+
+Recorder.defaultProps = {
+  onSetAudio: () => {}
+};
 
 export default Recorder;
