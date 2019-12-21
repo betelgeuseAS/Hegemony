@@ -29,18 +29,17 @@ class Speech extends Component {
 
     return (
       <div>
-        <h1>Recognition</h1>
-
         <Button variant="primary" onClick={startListening}>Start</Button>
-        <Button variant="warning" onClick={stopListening}>Stop</Button>
+        {/*<Button variant="warning" onClick={stopListening}>Stop</Button>*/}
+        <Button variant="warning" onClick={() => {stopListening(); this.props.onSetVoice(finalTranscript);}}>Stop</Button>
         <Button variant="danger" onClick={abortListening }>Abort</Button>
         <Button variant="secondary" onClick={resetTranscript}>Reset</Button>
 
         <div>
           <span>Recognition: {listening ? 'Yes' : 'No'}</span><br/>
-          <span>{transcript}</span><br/>
-          <span>{interimTranscript}</span><br/>
-          <span>{finalTranscript }</span>
+          <span>transcript: {transcript}</span><br/>
+          <span>interimTranscript: {interimTranscript}</span><br/>
+          <span>finalTranscript: {finalTranscript }</span>
         </div>
       </div>
     )
@@ -56,7 +55,13 @@ Speech.propTypes = {
   stopListening: PropTypes.func,
   abortListening: PropTypes.func,
   browserSupportsSpeechRecognition: PropTypes.bool,
-  listening: PropTypes.bool
+  listening: PropTypes.bool,
+
+  onSetVoice: PropTypes.func.isRequired
+};
+
+Speech.defaultProps = {
+  onSetVoice: () => {}
 };
 
 export default SpeechRecognition(options)(Speech);
