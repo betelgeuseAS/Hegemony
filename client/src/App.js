@@ -107,7 +107,7 @@ class App extends Component {
         <Row>
           <Col>
             <Router>
-              <div className="App">
+              <div className="app">
                 <NavBar componentLocalize={<Localize onSetLanguage={(language) => this.setLanguage(language)} />} />
                 <Route exact path="/" component={Landing} />
                 <Route exact path="/register" component={Register} />

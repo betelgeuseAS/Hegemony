@@ -8,14 +8,23 @@ import {
   SEARCH_RECORD,
   GET_ERRORS} from "../constants/constants";
 
-export const fetchRecords = data => {
-  return {
-    type: FETCH_RECORDS,
-    payload: data
-  }
+export const fetchRecords = () => dispatch => {
+  axios.get(`/records/records`)
+    .then(res => {
+      dispatch({
+        type: FETCH_RECORDS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
 };
 
-export const createRecord = (record, reFetchRecords) => dispatch => {
+export const createRecord = (record) => dispatch => {
   axios.post('/records/record', record)
     .then(res => {
       dispatch({
@@ -23,7 +32,7 @@ export const createRecord = (record, reFetchRecords) => dispatch => {
         payload: record
       });
 
-      reFetchRecords();
+      fetchRecords();
     })
     .catch(err => {
       dispatch({
@@ -40,6 +49,8 @@ export const updateRecord = (data) => dispatch => {
         type: UPDATE_RECORD,
         payload: data
       });
+
+      fetchRecords();
     })
     .catch(err => {
       dispatch({
@@ -56,6 +67,8 @@ export const deleteRecord = (id) => dispatch => {
         type: DELETE_RECORD,
         payload: id
       });
+
+      fetchRecords();
     })
     .catch(err => {
       dispatch({
@@ -74,9 +87,9 @@ export const searchRecords = (data) => dispatch => {
       });
     })
     .catch(err => {
-      // dispatch({
-      //   type: GET_ERRORS,
-      //   payload: err.response.data
-      // });
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
     });
 };

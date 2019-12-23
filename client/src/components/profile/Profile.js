@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import axios from 'axios';
-import {debounce} from "lodash";
-
+import { debounce } from "lodash";
 import {
   createRecord,
   fetchRecords,
@@ -11,8 +9,6 @@ import {
   updateRecord,
   searchRecords
 } from "../../actions/record";
-
-
 import Control from "./control/Control";
 import List from "./records/List";
 
@@ -23,9 +19,7 @@ class Profile extends Component {
     super(props);
     this.state = {
       openAlert: true,
-
       errors: {},
-
       search: '',
     }
   }
@@ -38,14 +32,8 @@ class Profile extends Component {
     }
   }
 
-  fetchRecords = () => {
-    axios.get(`/records/records`)
-      .then(res => {
-        this.props.fetchRecords(res.data);
-      });
-  };
   componentDidMount() {
-    this.fetchRecords();
+    this.props.fetchRecords();
   }
 
   // onChange = e => {
@@ -57,25 +45,20 @@ class Profile extends Component {
   };
 
   createRecord = (data) => {
-    console.log(data);
-    this.props.createRecord(data, this.fetchRecords);
+    this.props.createRecord(data);
   };
 
   updateRecord = (data, id) => {
     // e.preventDefault();
-    const {name, phone, address} = data;
+    const {type, name, content, files, tags} = data;
     this.props.updateRecord({
-      name, phone, address, _id: id
+      type, name, content, files, tags, _id: id
     });
-
-    this.fetchRecords();
   };
 
   deleteRecord = (id) => {
     // e.stopPropagation();
     this.props.deleteRecord(id);
-
-    this.fetchRecords();
   };
 
   searchRecords = debounce((searchRecords) => {
@@ -86,6 +69,7 @@ class Profile extends Component {
   render() {
     const { auth: {user}, records } = this.props;
     const { openAlert, search, errors } = this.state;
+
     return (
       <div>
         {
@@ -93,8 +77,7 @@ class Profile extends Component {
           <div className="alert alert-dismissible alert-info">
             <button type="button" onClick={this.closeAlert} className="close" data-dismiss="alert">&times;</button>
             <h4><b>Hello, </b> <span className="text-warning">{user.name.split(" ")[0]}</span></h4>
-          </div> :
-          false
+          </div> : null
         }
 
         <Control
@@ -152,13 +135,11 @@ const mapStateToProps = (store) => ({
 });
 
 const	mapDispatchToProps = dispatch	=> ({
-  createRecord: (record, func) => dispatch(createRecord(record, func)),
+  createRecord: (record) => dispatch(createRecord(record)),
   fetchRecords: (data) => dispatch(fetchRecords(data)),
   deleteRecord: (id) => dispatch(deleteRecord(id)),
   updateRecord: (data, id) => dispatch(updateRecord(data, id)),
   searchRecords: (str) => dispatch(searchRecords(str))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

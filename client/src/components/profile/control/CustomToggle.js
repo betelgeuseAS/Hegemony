@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import "./CustomToggle.sass";
-
 import calendar from "../../../img/control/calendar.svg";
 
 class CustomToggle extends Component {

@@ -2,7 +2,6 @@ import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import {Card, Form, Modal} from "react-bootstrap";
 import classNames from "classnames";
-
 import {RecordContext} from "../Profile";
 
 const Record = ({record}) => {

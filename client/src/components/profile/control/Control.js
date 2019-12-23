@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Modal, Dropdown } from 'react-bootstrap';
 import classNames from "classnames";
-import isEmpty from "is-empty";
-
+// import isEmpty from "is-empty";
 import localization from "../../localization/localization";
-
 import DatePicker from "../../datePicker/DatePicker";
 import CustomToggle from "./CustomToggle";
 import Recorder from "../../audioRecorder/Recorder";
@@ -21,14 +19,12 @@ class Control extends Component {
       text: false, //text record
       audio: false, //audio Record
       voice: false, //voice Recognition
-
       name: '',
       content: '',
       files: [],
       tags: [],
       blob: {},
       recognition: '',
-
       date: undefined //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
     };
   }
@@ -38,7 +34,6 @@ class Control extends Component {
     this.setState({ [name]: value });
   };
 
-  //DatePicker:
   handleDayPickerChange = (date, {selected}) => {
     if (selected) {
       // Unselect the day if already selected:
@@ -67,12 +62,10 @@ class Control extends Component {
     }
   };
 
-  //Text Editor:
   setTextEditor = (data) => {
     this.setState({content: data});
   };
 
-  //Type Ahead:
   setTags = (tags) => {
     this.setState({tags});
   };
