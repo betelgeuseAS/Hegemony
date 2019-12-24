@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Record from "./Record";
+import './List.sass';
 
 const List = ({records}) => {
   return (
     <div className="mt-3">
-      <ul style={{listStyleType: 'none', margin: '0', padding: 0}}>
+      <ul className="list-records">
         {
           records.map(item => (
-            <li style={{display: 'inline-block', margin: '7px 10px 7px 10px'}} key={item._id}>
+            <li className="list-records-item" key={item._id}>
               <Record record={item} />
             </li>
           ))

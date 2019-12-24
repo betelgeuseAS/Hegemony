@@ -19,7 +19,7 @@ class Speech extends Component {
       abortListening,
       browserSupportsSpeechRecognition,
       listening,
-      recognition
+      // recognition
     } = this.props;
 
     if (!browserSupportsSpeechRecognition) {

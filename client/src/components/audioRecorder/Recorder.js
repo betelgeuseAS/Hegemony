@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from "react-bootstrap";
 import { ReactMic } from 'react-mic';
-
-import Audio from '../audio/Audio';
-
 import './Recorder.sass';
 
 export class Recorder extends Component {
@@ -34,6 +31,7 @@ export class Recorder extends Component {
   };
 
   onSave=(blobObject) => {
+
   };
 
   onStart=() => {

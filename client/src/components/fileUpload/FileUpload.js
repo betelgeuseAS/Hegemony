@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { /*useState,*/ useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FilePond, registerPlugin } from 'react-filepond';
 import FilePondPluginFileRename from 'filepond-plugin-file-rename';
@@ -8,6 +8,7 @@ import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orien
 import FilePondPluginImageValidateSize from 'filepond-plugin-image-validate-size';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+
 registerPlugin(
   FilePondPluginFileRename,
   FilePondPluginImagePreview,

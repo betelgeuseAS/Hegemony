@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import {Nav, Navbar} from 'react-bootstrap';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-
 import { logoutUser } from "../../actions/auth";
-
 import localization from "../localization/localization";
 
 class NavBar extends Component {

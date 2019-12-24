@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
 import localization from './localization';
-
 import './Localize.sass';
-
 import ukraine from '../../img/flag/ukraine.svg';
 import russia from '../../img/flag/russia.svg';
 import great_britain from '../../img/flag/great-britain.svg';

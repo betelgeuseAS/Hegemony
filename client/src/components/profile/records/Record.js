@@ -8,7 +8,7 @@ const Record = ({record}) => {
   const [showModal, setOpen] = useState(false);
   const [values, setValues] = useState({name: record.name, phone: record.phone, address: record.address});
 
-  const {errors, onDeleteRecord, onUpdateRecord, user} = useContext(RecordContext);
+  const {errors, onDeleteRecord, onUpdateRecord/*, user*/} = useContext(RecordContext);
 
   const handleInputChange = e => {
     const {name, value} = e.target;

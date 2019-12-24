@@ -7,7 +7,6 @@ import { setCurrentUser, logoutUser } from "./actions/auth";
 import { store } from	'./store/configureStore';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-
 import NavBar from "./components/layout/NavBar";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
@@ -15,9 +14,7 @@ import Login from "./components/auth/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./components/profile/Profile";
 import { Localize } from "./components/localization/Localize";
-
 import './App.sass';
-
 import localization from "./components/localization/localization";
 
 

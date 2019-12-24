@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-
 import localization from '../localization/localization';
-
 import './DatePicker.sass';
 
 const currentYear = new Date().getFullYear();
