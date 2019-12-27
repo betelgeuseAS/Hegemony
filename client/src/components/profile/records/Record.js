@@ -1,8 +1,9 @@
 import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
-import {Card, Form, Modal} from "react-bootstrap";
+import moment from "moment";
+import { Card, Form, Modal } from "react-bootstrap";
 import classNames from "classnames";
-import {RecordContext} from "../Profile";
+import { RecordContext } from "../Profile";
 
 const Record = ({record}) => {
   const [showModal, setOpen] = useState(false);
@@ -18,15 +19,22 @@ const Record = ({record}) => {
   return (
     <>
       <Card style={{ width: '20rem' }} className="pt-1">
-        <button type="button" onClick={() => setOpen(true)} className="btn btn-outline-info" style={{position: "absolute", right: '0', top: '0'}}>
-          <i className="fa fa-pencil" aria-hidden="true" />
-        </button>
+        <Card.Header>
+          <button type="button" onClick={() => setOpen(true)} className="btn btn-outline-info" style={{position: "absolute", right: '0', top: '0'}}>
+            <i className="fa fa-pencil" aria-hidden="true" />
+          </button>
+        </Card.Header>
 
         <Card.Body className="p-1">
           <Card.Title>{record.name}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{record.phone}</Card.Subtitle>
           <Card.Text>{record.address}</Card.Text>
         </Card.Body>
+
+        <Card.Footer className="text-muted">
+          <Card.Text>Created: {moment(record.createdAt).format('MMMM d YYYY, h:mm A')}</Card.Text>
+          <Card.Text>Updated: {moment(record.updatedAt).format('MMMM d YYYY, h:mm A')}</Card.Text>
+        </Card.Footer>
       </Card>
 
       <Modal show={showModal} onHide={() => setOpen(false)} size={'lg'}>

@@ -13,7 +13,7 @@ const toMonth = new Date(currentYear - 9, 11); //From current year and --
 
 function YearMonthForm({ date, localeUtils, onChange }) {
   // const months = localeUtils.getMonths();
-  const months = localization.date.months;
+  const months = localization.date.months_long;
 
   const years = [];
   //From current year and ++:
@@ -72,9 +72,9 @@ class DatePicker extends Component {
           selectedDays={date}
           locale={localization._language}
           // Without form in picker:
-          // months={localization.date.months}
+          // months={localization.date.months_long}
           weekdaysLong={localization.date.weekdays_long}
-          weekdaysShort={localization.date.weekdays_short}
+          weekdaysShort={localization.date.weekdays_min}
           showOutsideDays={true}
           enableOutsideDaysClick={true}
 

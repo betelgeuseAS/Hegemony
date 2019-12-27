@@ -7,6 +7,7 @@ import { setCurrentUser, logoutUser } from "./actions/auth";
 import { store } from	'./store/configureStore';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import moment from "moment";
 import NavBar from "./components/layout/NavBar";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
@@ -96,6 +97,77 @@ class App extends Component {
     // });
     // localization.formatString(localization.onlyForMembers, <a href="http://login.com">{localization.login}</a>)
     // localization.formatString(localization.iAmText, <b>{localization.bold}</b>)
+
+    this.setMomentLanguage(localization.getLanguage());
+  };
+
+  setMomentLanguage = (language) => {
+    //See https://momentjs.com/docs/#/customization/
+    moment.locale('language', {
+      months : localization.date.months_long,
+      monthsShort : localization.date.months_short,
+      monthsParseExact : true,
+      weekdays : localization.date.weekdays_long,
+      weekdaysShort : localization.date.weekdays_short,
+      weekdaysMin : localization.date.weekdays_min,
+      weekdaysParseExact : true,
+      longDateFormat : {
+        LT: "h:mm A",
+        LTS: "h:mm:ss A",
+        L: "MM/DD/YYYY",
+        l: "M/D/YYYY",
+        LL: "MMMM Do YYYY",
+        ll: "MMM D YYYY",
+        LLL: "MMMM Do YYYY LT",
+        lll: "MMM D YYYY LT",
+        LLLL: "dddd, MMMM Do YYYY LT",
+        llll: "ddd, MMM D YYYY LT"
+      },
+      calendar : {
+        lastDay : '[Yesterday at] LT',
+        sameDay : '[Today at] LT',
+        nextDay : '[Tomorrow at] LT',
+        lastWeek : '[last] dddd [at] LT',
+        nextWeek : 'dddd [at] LT',
+        sameElse : 'L'
+      },
+      relativeTime : {
+        future: "in %s",
+        past:   "%s ago",
+        s  : 'a few seconds',
+        ss : '%d seconds',
+        m:  "a minute",
+        mm: "%d minutes",
+        h:  "an hour",
+        hh: "%d hours",
+        d:  "a day",
+        dd: "%d days",
+        M:  "a month",
+        MM: "%d months",
+        y:  "a year",
+        yy: "%d years"
+      },
+      dayOfMonthOrdinalParse : /\d{1,2}(er|e)/,
+      ordinal : function (number) {
+        return number + (number === 1 ? 'er' : 'e');
+      },
+      meridiemParse : /PD|MD/,
+      isPM : function (input) {
+        return input.charAt(0) === 'M';
+      },
+      // In case the meridiem units are not separated around 12, then implement
+      // this function (look at locale/id.js for an example).
+      // meridiemHour : function (hour, meridiem) {
+      //     return /* 0-23 hour, given meridiem token and hour 1-12 */ ;
+      // },
+      meridiem : function (hours, minutes, isLower) {
+        return hours < 12 ? 'PM' : 'AM';
+      },
+      week : {
+        dow : 1, // Monday is the first day of the week.
+        doy : 4  // Used to determine first week of the year.
+      }
+    });
   };
 
   render() {

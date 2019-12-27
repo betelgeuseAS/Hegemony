@@ -6,9 +6,11 @@ let localization = new LocalizedStrings({
     language: "English",
     //date:
     date: {
-      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      months_long: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      months_short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
       weekdays_long: ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      weekdays_short: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+      weekdays_short: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      weekdays_min: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
     },
     you_have_chosen: 'You have chosen',
     choose_date: 'Please choose date',
@@ -68,9 +70,11 @@ let localization = new LocalizedStrings({
     language: "Українська",
     //date:
     date: {
-      months: ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'],
+      months_long: ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'],
+      months_short: ['Cіч', 'Лют', 'Бер', 'Квіт', 'Трав', 'Черв', 'Лип', 'Серп', 'Вер', 'Жовт', 'Лист', 'Груд'],
       weekdays_long: ['Неділя','Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П`ятниця', 'Субота'],
-      weekdays_short: ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
+      weekdays_short: ['Нед', 'Пон', 'Вів', 'Сер', 'Чет', 'П`ят', 'Суб'],
+      weekdays_min: ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
     },
     you_have_chosen: 'Ви обрали',
     choose_date: 'Будь ласка, оберіть дату',
@@ -130,9 +134,11 @@ let localization = new LocalizedStrings({
     language: "Русский",
     //date:
     date: {
-      months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+      months_long: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+      months_short: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
       weekdays_long: ['Воскресенье','Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
-      weekdays_short: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
+      weekdays_short: ['Вос', 'Пон', 'Вто', 'Сре', 'Чет', 'Пят', 'Суб'],
+      weekdays_min: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
     },
     you_have_chosen: 'Вы выбрали',
     choose_date: 'Пожалуйста, выберите дату',

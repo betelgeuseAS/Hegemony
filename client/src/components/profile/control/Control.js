@@ -117,9 +117,7 @@ class Control extends Component {
 
             <Col md={2} className="text-right">
               <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  <i className="fa fa-plus mr-1" aria-hidden="true" />Create
-                </Dropdown.Toggle>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">Create</Dropdown.Toggle>
 
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => this.handleToggleModal('text', true)}>Text Record</Dropdown.Item>
