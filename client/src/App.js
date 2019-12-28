@@ -103,7 +103,7 @@ class App extends Component {
 
   setMomentLanguage = (language) => {
     //See https://momentjs.com/docs/#/customization/
-    moment.locale('language', {
+    moment.locale(language, {
       months : localization.date.months_long,
       monthsShort : localization.date.months_short,
       monthsParseExact : true,
@@ -111,49 +111,21 @@ class App extends Component {
       weekdaysShort : localization.date.weekdays_short,
       weekdaysMin : localization.date.weekdays_min,
       weekdaysParseExact : true,
-      longDateFormat : {
-        LT: "h:mm A",
-        LTS: "h:mm:ss A",
-        L: "MM/DD/YYYY",
-        l: "M/D/YYYY",
-        LL: "MMMM Do YYYY",
-        ll: "MMM D YYYY",
-        LLL: "MMMM Do YYYY LT",
-        lll: "MMM D YYYY LT",
-        LLLL: "dddd, MMMM Do YYYY LT",
-        llll: "ddd, MMM D YYYY LT"
-      },
-      calendar : {
-        lastDay : '[Yesterday at] LT',
-        sameDay : '[Today at] LT',
-        nextDay : '[Tomorrow at] LT',
-        lastWeek : '[last] dddd [at] LT',
-        nextWeek : 'dddd [at] LT',
-        sameElse : 'L'
-      },
-      relativeTime : {
-        future: "in %s",
-        past:   "%s ago",
-        s  : 'a few seconds',
-        ss : '%d seconds',
-        m:  "a minute",
-        mm: "%d minutes",
-        h:  "an hour",
-        hh: "%d hours",
-        d:  "a day",
-        dd: "%d days",
-        M:  "a month",
-        MM: "%d months",
-        y:  "a year",
-        yy: "%d years"
-      },
+      longDateFormat : localization.date.moment.longDateFormat,
+      calendar : localization.date.moment.calendar,
+      relativeTime : localization.date.moment.relativeTime,
       dayOfMonthOrdinalParse : /\d{1,2}(er|e)/,
-      ordinal : function (number) {
-        return number + (number === 1 ? 'er' : 'e');
+      ordinal : function (number, token) {
+        let b = number % 10;
+        let output = (~~ (number % 100 / 10) === 1) ? 'th' :
+          (b === 1) ? 'st' :
+            (b === 2) ? 'nd' :
+              (b === 3) ? 'rd' : 'th';
+        return number + output;
       },
-      meridiemParse : /PD|MD/,
+      meridiemParse : /PM|AM/,
       isPM : function (input) {
-        return input.charAt(0) === 'M';
+        return input.charAt(0) === 'A';
       },
       // In case the meridiem units are not separated around 12, then implement
       // this function (look at locale/id.js for an example).
@@ -161,7 +133,7 @@ class App extends Component {
       //     return /* 0-23 hour, given meridiem token and hour 1-12 */ ;
       // },
       meridiem : function (hours, minutes, isLower) {
-        return hours < 12 ? 'PM' : 'AM';
+        return hours < 12 ? localization.date.moment.pm : localization.date.moment.am;
       },
       week : {
         dow : 1, // Monday is the first day of the week.
