@@ -13,14 +13,15 @@ record.post('/record', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  Record.findOne({ phone: req.body.phone }).then(record => {
+  Record.findOne({ name: req.body.name }).then(record => {
     if (record) {
-      return res.status(400).json({phone: "Phone already exists"});
+      return res.status(400).json({name: "Name already exists"});
     } else {
       const record = new Record({
+        type: req.body.type,
         name: req.body.name,
-        phone: req.body.phone,
-        address: req.body.address
+        content: req.body.content,
+        tags: req.body.tags
       });
       record.save()
         .then(data => {

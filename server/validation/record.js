@@ -12,9 +12,9 @@ module.exports = function validateRecord(data) {
   }
 
   // Content checks
-  if (Validator.isEmpty(data.content)) {
-    errors.phone = "Content field is required";
-  }
+  // if (Validator.isEmpty(data.content)) {
+  //   errors.content = "Content field is required";
+  // }
 
   return {
     errors,

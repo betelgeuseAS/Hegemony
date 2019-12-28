@@ -177,7 +177,7 @@ class Control extends Component {
 
           <Modal.Footer>
             <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('text', false)}>Close</button>
-            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, content, files, tags});}}>Save</button>
+            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({type: 'text', name, content, files, tags});}}>Save</button>
           </Modal.Footer>
         </Modal>
 
@@ -220,7 +220,7 @@ class Control extends Component {
           </Modal.Body>
           <Modal.Footer>
             <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('audio', false)}>Close</button>
-            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, blob, tags});}}>Save</button>
+            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({type: 'audio', name, blob, tags});}}>Save</button>
           </Modal.Footer>
         </Modal>
 
@@ -263,7 +263,7 @@ class Control extends Component {
           </Modal.Body>
           <Modal.Footer>
             <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('voice', false)}>Close</button>
-            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({name, recognition, tags});}}>Save</button>
+            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({type: 'voice', name, recognition, tags});}}>Save</button>
           </Modal.Footer>
         </Modal>
       </div>
