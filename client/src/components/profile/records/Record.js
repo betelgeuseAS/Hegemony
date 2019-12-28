@@ -4,6 +4,7 @@ import moment from "moment";
 import { Card, Form, Modal } from "react-bootstrap";
 import classNames from "classnames";
 import { RecordContext } from "../Profile";
+import "./Record.sass";
 
 const Record = ({record}) => {
   const [showModal, setOpen] = useState(false);
@@ -18,22 +19,31 @@ const Record = ({record}) => {
 
   return (
     <>
-      <Card style={{ width: '20rem' }} className="pt-1">
-        <Card.Header>
-          <button type="button" onClick={() => setOpen(true)} className="btn btn-outline-info" style={{position: "absolute", right: '0', top: '0'}}>
-            <i className="fa fa-pencil" aria-hidden="true" />
-          </button>
-        </Card.Header>
+      <Card
+        style={{ width: '20rem' }}
+        className={classNames(
+          'record-item pt-1',
+          {
+            'text-association': record.type === 'text',
+            'audio-association': record.type === 'audio',
+            'voice-association': record.type === 'voice'
+          }
+        )}
+      >
+        {/*<Card.Header></Card.Header>*/}
+        <button type="button" onClick={() => setOpen(true)} className="btn btn-outline-info" style={{position: "absolute", right: '0', top: '0'}}>
+          <i className="fa fa-info" aria-hidden="true" />
+        </button>
 
         <Card.Body className="p-1">
-          <Card.Title>{record.name}</Card.Title>
+          <Card.Title className="cut-text pr-5" title={record.name}>{record.name}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{record.phone}</Card.Subtitle>
           <Card.Text>{record.address}</Card.Text>
         </Card.Body>
 
         <Card.Footer className="text-muted">
-          <Card.Text>Created: {moment(record.createdAt).format('MMMM d YYYY, h:mm A')}</Card.Text>
-          <Card.Text>Updated: {moment(record.updatedAt).format('MMMM d YYYY, h:mm A')}</Card.Text>
+          <Card.Text>Created: <span className="record-date">{moment(record.createdAt).format('MMMM d YYYY, h:mm A')}</span></Card.Text>
+          <Card.Text>Updated: <span className="record-date">{moment(record.updatedAt).format('MMMM d YYYY, h:mm A')}</span></Card.Text>
         </Card.Footer>
       </Card>
 
