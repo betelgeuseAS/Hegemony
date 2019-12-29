@@ -24,7 +24,7 @@ class TextEditor extends Component {
       <div>
         <CKEditor
           editor={ClassicEditor}
-          data="" //Initial data. For example: <p>Type something.</p>
+          data={this.props.initData} //Initial data. For example: <p>Type something.</p>
           config={editorConfig}
           onInit={ editor => {
             // You can store the "editor" and use when it is needed.
@@ -49,11 +49,13 @@ class TextEditor extends Component {
 }
 
 TextEditor.propTypes = {
-  onChangeContent: PropTypes.func.isRequired
+  onChangeContent: PropTypes.func.isRequired,
+  initData: PropTypes.string
 };
 
 TextEditor.defaultProps = {
   onChangeContent: () => {},
+  initData: ""
 };
 
 export default TextEditor;

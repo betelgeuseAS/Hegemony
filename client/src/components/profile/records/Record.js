@@ -5,16 +5,32 @@ import { Card, Form, Modal } from "react-bootstrap";
 import classNames from "classnames";
 import { RecordContext } from "../Profile";
 import "./Record.sass";
+import {TypeAhead} from "../../typeAhead/TypeAhead";
+import localization from "../../localization/localization";
+import TextEditor from "../../textEditor/TextEditor";
+import {FileUpload} from "../../fileUpload/FileUpload";
 
 const Record = ({record}) => {
   const [showModal, setOpen] = useState(false);
-  const [values, setValues] = useState({name: record.name, phone: record.phone, address: record.address});
+  const [values, setValues] = useState({name: record.name, content: record.content, tags: record.tags});
 
-  const {errors, onDeleteRecord, onUpdateRecord/*, user*/} = useContext(RecordContext);
+  const {errors, onDeleteRecord, onUpdateRecord, user} = useContext(RecordContext);
 
   const handleInputChange = e => {
     const {name, value} = e.target;
     setValues({...values, [name]: value});
+  };
+
+  const setTags = (tags) => {
+    setValues({...values, tags});
+  };
+
+  const setTextEditor = (content) => {
+    setValues({...values, content});
+  };
+
+  const setFiles = (files) => {
+    setValues({...values, files});
   };
 
   return (
@@ -37,8 +53,7 @@ const Record = ({record}) => {
 
         <Card.Body className="p-1">
           <Card.Title className="cut-text pr-5" title={record.name}>{record.name}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">{record.phone}</Card.Subtitle>
-          <Card.Text>{record.address}</Card.Text>
+          {/*<Card.Subtitle className="mb-2 text-muted">{}</Card.Subtitle>*/}
         </Card.Body>
 
         <Card.Footer className="text-muted">
@@ -67,32 +82,58 @@ const Record = ({record}) => {
               <span className="invalid-feedback">{errors.name}</span>
             </Form.Group>
 
-            <Form.Group>
-              <Form.Label>Phone</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter phone"
-                onChange={handleInputChange}
-                value={values.phone}
-                name="phone"
-                className={classNames("", {
-                  'is-invalid': errors.phone
-                })}/>
-              <span className="invalid-feedback">{errors.phone}</span>
-            </Form.Group>
+            {
+              record.type === 'text'&&
+              <>
+                <Form.Group>
+                  <Form.Label>{localization.what_your_mind}</Form.Label>
+                  <TextEditor
+                    initData={values.content}
+                    onChangeContent={setTextEditor}
+                  />
+                  {errors.content === 'Content field is required' && (<div className="invalid-feedback">{localization.content_required}</div>)}
+                  <Form.Text className="text-muted">{localization.not_forgotten_anything}</Form.Text>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Files</Form.Label>
+                  <FileUpload
+                    files={record.files}
+                    onSetFiles={setFiles}
+                  />
+                </Form.Group>
+              </>
+            }
+
+            {
+              record.type === 'audio'&&
+              <Form.Group>
+                <Form.Label>Audio</Form.Label>
+                <div className="audio-wrapper">
+                  <audio controls="controls" src={'blobURL'} />
+                </div>
+              </Form.Group>
+            }
+
+            {
+              record.type === 'voice'&&
+              <Form.Group>
+                <Form.Label>Voice</Form.Label>
+                <Form.Text className="text-muted">
+                  {
+                    record.content || <span className="text-danger">No Data</span>
+                  }
+                </Form.Text>
+              </Form.Group>
+            }
 
             <Form.Group>
-              <Form.Label>Address</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter address"
-                onChange={handleInputChange}
-                value={values.address}
-                name="address"
-                className={classNames("", {
-                  'is-invalid': errors.address
-                })}/>
-              <span className="invalid-feedback">{errors.address}</span>
+              <Form.Label>Tags</Form.Label>
+              <TypeAhead
+                tags={user.tags}
+                selects={values.tags}
+                onSetTags={setTags}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>

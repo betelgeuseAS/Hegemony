@@ -79,8 +79,9 @@ record.put('/record/:recordId', (req, res) => {
 
   Record.findByIdAndUpdate(req.params.recordId, {
     name: req.body.name,
-    phone: req.body.phone,
-    address: req.body.address
+    content: req.body.content,
+    tags: req.body.tags,
+    files: req.body.files
   }, {new: true})
     .then(record => {
       if(!record) {
