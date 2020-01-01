@@ -81,7 +81,6 @@ record.put('/record/:recordId', (req, res) => {
     name: req.body.name,
     content: req.body.content,
     tags: req.body.tags,
-    files: req.body.files
   }, {new: true})
     .then(record => {
       if(!record) {
