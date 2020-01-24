@@ -8,3 +8,4 @@ export const CREATE_RECORD = "CREATE_RECORD";
 export const DELETE_RECORD = "DELETE_RECORD";
 export const UPDATE_RECORD = "UPDATE_RECORD";
 export const SEARCH_RECORD = "SEARCH_RECORD";
+export const FETCH_TREE = "FETCH_TREE";

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Modal, Dropdown } from 'react-bootstrap';
+import {Row, Col, Form, Modal, Dropdown, Button} from 'react-bootstrap';
 import classNames from "classnames";
 // import isEmpty from "is-empty";
 import localization from "../../localization/localization";
@@ -9,6 +9,7 @@ import CustomToggle from "./CustomToggle";
 import Recorder from "../../audioRecorder/Recorder";
 import Speech from "../../speechRecognition/Speech";
 import TextEditor from "../../textEditor/TextEditor"
+import TreeRecords from "../../tree/TreeRecords";
 import { TypeAhead } from "../../typeAhead/TypeAhead";
 import { FileUpload } from "../../fileUpload/FileUpload";
 
@@ -25,7 +26,8 @@ class Control extends Component {
       tags: [],
       blob: {},
       recognition: '',
-      date: undefined //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
+      date: undefined, //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
+      tree: false, //tree records
     };
   }
 
@@ -56,6 +58,9 @@ class Control extends Component {
       case 'voice':
         this.setState({voice: value});
         break;
+      case 'tree':
+        this.setState({tree: value});
+        break;
       default:
         this.setState({text: false, audio: false, voice: false});
         break;
@@ -83,8 +88,8 @@ class Control extends Component {
   };
 
   render() {
-    const {onSearchRecords, onCreateRecord, errors, user} = this.props;
-    const {text, audio, voice, content, name, tags, files, date, blob, recognition} = this.state;
+    const {onSearchRecords, onCreateRecord, errors, user, tree: treeData} = this.props;
+    const {text, audio, voice, content, name, tags, files, date, blob, recognition, tree} = this.state;
 
     return (
       <div>
@@ -93,7 +98,7 @@ class Control extends Component {
             <Col md={2}>
               <Form.Label className="mt-2">{localization.search_records}:</Form.Label>
             </Col>
-            <Col md={7}>
+            <Col md={6}>
               <Form.Control
                 type="text"
                 placeholder="Type something"
@@ -113,6 +118,10 @@ class Control extends Component {
                   <DatePicker className="form-control" onDayPickerChange={(date, {selected}) => this.handleDayPickerChange(date, {selected})} date={date} />
                 </Dropdown.Menu>
               </Dropdown>
+            </Col>
+
+            <Col md={1}>
+              <Button className="btn btn-primary" onClick={() => this.handleToggleModal('tree', true)}>Tree</Button>
             </Col>
 
             <Col md={2} className="text-right">
@@ -266,6 +275,18 @@ class Control extends Component {
             <button className="btn btn-outline-success" onClick={() => {onCreateRecord({type: 'voice', name, recognition, tags});}}>Save</button>
           </Modal.Footer>
         </Modal>
+
+        <Modal show={tree} onHide={() => this.handleToggleModal('tree', false)} size={'lg'}>
+          <Modal.Header closeButton>
+            <Modal.Title>Tree Records</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <TreeRecords data={treeData} />
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('tree', false)}>Close</button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
@@ -274,6 +295,7 @@ class Control extends Component {
 Control.propTypes = {
   onSearchRecords: PropTypes.func.isRequired,
   onCreateRecord: PropTypes.func.isRequired,
+  onSetTreeData: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
@@ -283,6 +305,7 @@ Control.propTypes = {
 Control.defaultProps = {
   onSearchRecords: () => {},
   onCreateRecord: () => {},
+  onSetTreeData: () => {},
   onChange: () => {},
   data: {},
   errors: {},

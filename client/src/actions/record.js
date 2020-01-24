@@ -6,7 +6,8 @@ import {
   DELETE_RECORD,
   UPDATE_RECORD,
   SEARCH_RECORD,
-  GET_ERRORS} from "../constants/constants";
+  GET_ERRORS,
+  FETCH_TREE} from "../constants/constants";
 
 export const fetchRecords = () => dispatch => {
   axios.get(`/records/records`)
@@ -83,6 +84,22 @@ export const searchRecords = (data) => dispatch => {
     .then(res => {
       dispatch({
         type: SEARCH_RECORD,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+export const fetchTree = () => dispatch => {
+  axios.get('/records/tree')
+    .then(res => {
+      dispatch({
+        type: FETCH_TREE,
         payload: res.data
       });
     })

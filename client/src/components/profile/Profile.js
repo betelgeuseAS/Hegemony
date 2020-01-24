@@ -7,7 +7,8 @@ import {
   fetchRecords,
   deleteRecord,
   updateRecord,
-  searchRecords
+  searchRecords,
+  fetchTree
 } from "../../actions/record";
 import Control from "./control/Control";
 import List from "./records/List";
@@ -34,6 +35,7 @@ class Profile extends Component {
 
   componentDidMount() {
     this.props.fetchRecords();
+    this.props.fetchTree();
   }
 
   // onChange = e => {
@@ -67,7 +69,7 @@ class Profile extends Component {
   }, 1000);
 
   render() {
-    const { auth: {user}, records } = this.props;
+    const { auth: {user}, records, tree } = this.props;
     const { openAlert, search, errors } = this.state;
 
     return (
@@ -83,6 +85,7 @@ class Profile extends Component {
         <Control
           onSearchRecords={this.searchRecords}
           onCreateRecord={this.createRecord}
+          tree={tree}
           errors={errors}
           user={user}
         />
@@ -114,7 +117,8 @@ Profile.propTypes = {
   searchRecords: PropTypes.func.isRequired,
   records: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  tree: PropTypes.array.isRequired
 };
 
 Profile.defaultProps = {
@@ -123,15 +127,18 @@ Profile.defaultProps = {
   deleteRecord: () => {},
   updateRecord: () => {},
   searchRecords: () => {},
+  fetchTree: () => {},
   records: [],
   errors: {},
-  auth: {}
+  auth: {},
+  tree: []
 };
 
 const mapStateToProps = (store) => ({
   records: store.records,
   errors: store.errors,
-  auth: store.auth
+  auth: store.auth,
+  tree: store.tree
 });
 
 const	mapDispatchToProps = dispatch	=> ({
@@ -139,7 +146,8 @@ const	mapDispatchToProps = dispatch	=> ({
   fetchRecords: (data) => dispatch(fetchRecords(data)),
   deleteRecord: (id) => dispatch(deleteRecord(id)),
   updateRecord: (data, id) => dispatch(updateRecord(data, id)),
-  searchRecords: (str) => dispatch(searchRecords(str))
+  searchRecords: (str) => dispatch(searchRecords(str)),
+  fetchTree: (data) => dispatch(fetchTree(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

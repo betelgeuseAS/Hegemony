@@ -1,5 +1,7 @@
 const express = require("express");
 const record = express.Router();
+const _ = require('lodash');
+const moment = require('moment');
 
 // Load input validation
 const validateRecord = require("../validation/record");
@@ -134,6 +136,67 @@ record.post('/search', (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: err.message || "Nothing was found"
+      });
+    });
+});
+
+// GET records/tree
+record.get('/tree', (req, res) => {
+  let dateRecords = [], tree = [];
+
+  Record.find()
+    .sort({created: -1})
+    .then(records => {
+      _.forEach(records, record => {
+        dateRecords.push({
+          year: moment(record.created).year(),
+          month: moment(record.created).month(),
+          day: moment(record.created).day(),
+          _id: record._id,
+          name: record.name
+        });
+      });
+      _.forEach(dateRecords, date => {
+        if (!_.find(tree, {year: date.year})) {
+          tree.push({
+            year: date.year,
+            months: [{
+              month: date.month,
+              days: [{
+                day: date.day,
+                records: [{_id: date._id, name: date.name}]
+              }]
+            }]
+          });
+        } else {
+          let indexYear = _.findIndex(tree, {year: date.year});
+          if (!_.find(tree[indexYear].months, {month: date.month})) {
+            tree[indexYear].months.push({
+              month: date.month,
+              days: [{
+                day: date.day,
+                records: [{_id: date._id, name: date.name}]
+              }]
+            })
+          } else {
+            let indexMonth = _.findIndex(tree[indexYear].months, {month: date.month});
+            if (!_.find(tree[indexYear].months[indexMonth].days, {day: date.day})) {
+              tree[indexYear].months[indexMonth].days.push({
+                day: date.day,
+                records: [{_id: date._id, name: date.name}]
+              });
+            } else {
+              let indexDay = _.findIndex(tree[indexYear].months[indexMonth].days, {day: date.day});
+              tree[indexYear].months[indexMonth].days[indexDay].records.push({_id: date._id, name: date.name});
+            }
+          }
+        }
+      });
+      res.send(tree);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "No data"
       });
     });
 });

@@ -3,11 +3,13 @@ import {
   CREATE_RECORD,
   UPDATE_RECORD,
   DELETE_RECORD,
-  SEARCH_RECORD } from '../constants/constants';
+  SEARCH_RECORD,
+  FETCH_TREE } from '../constants/constants';
 
 const initialState = [];
+const initialStateTree = [];
 
-export default function(state = initialState, action) {
+export const record = (state = initialState, action) => {
   switch(action.type) {
     case FETCH_RECORDS:
       return action.payload;
@@ -25,4 +27,13 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export const tree = (state = initialStateTree, action) => {
+  switch(action.type) {
+    case FETCH_TREE:
+      return action.payload;
+    default:
+      return state;
+  }
+};
