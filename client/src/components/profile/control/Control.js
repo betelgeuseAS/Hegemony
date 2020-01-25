@@ -1,40 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Row, Col, Form, Modal, Dropdown, Button} from 'react-bootstrap';
-import classNames from "classnames";
+import {Row, Col, Form, Dropdown, Button} from 'react-bootstrap';
 // import isEmpty from "is-empty";
 import localization from "../../localization/localization";
 import DatePicker from "../../datePicker/DatePicker";
 import CustomToggle from "./CustomToggle";
-import Recorder from "../../audioRecorder/Recorder";
-import Speech from "../../speechRecognition/Speech";
-import TextEditor from "../../textEditor/TextEditor"
-import TreeRecords from "../../tree/TreeRecords";
-import { TypeAhead } from "../../typeAhead/TypeAhead";
-import { FileUpload } from "../../fileUpload/FileUpload";
+import ModalCreateRecord from "../modal/ModalCreateRecord";
+import ModalTreeRecords from "../modal/ModalTreeRecords";
 
 class Control extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: false, //text record
-      audio: false, //audio Record
-      voice: false, //voice Recognition
-      name: '',
-      content: '',
-      files: [],
-      tags: [],
-      blob: {},
-      recognition: '',
+      modal: '',
       date: undefined, //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
-      tree: false, //tree records
     };
   }
-
-  handleInputChange = e => {
-    const {name, value} = e.target;
-    this.setState({ [name]: value });
-  };
 
   handleDayPickerChange = (date, {selected}) => {
     if (selected) {
@@ -47,49 +28,13 @@ class Control extends Component {
     });
   };
 
-  handleToggleModal = (type, value) => {
-    switch(type) {
-      case 'text':
-        this.setState({text: value});
-        break;
-      case 'audio':
-        this.setState({audio: value});
-        break;
-      case 'voice':
-        this.setState({voice: value});
-        break;
-      case 'tree':
-        this.setState({tree: value});
-        break;
-      default:
-        this.setState({text: false, audio: false, voice: false});
-        break;
-    }
-  };
-
-  setTextEditor = (data) => {
-    this.setState({content: data});
-  };
-
-  setTags = (tags) => {
-    this.setState({tags});
-  };
-
-  setFiles = (files) => {
-    this.setState({files});
-  };
-
-  setAudio = (blob) => {
-    this.setState({blob});
-  };
-
-  setVoice = (recognition) => {
-    this.setState({recognition});
+  handleToggleModal = (modal) => {
+    this.setState({modal});
   };
 
   render() {
     const {onSearchRecords, onCreateRecord, errors, user, tree: treeData} = this.props;
-    const {text, audio, voice, content, name, tags, files, date, blob, recognition, tree} = this.state;
+    const {date, modal} = this.state;
 
     return (
       <div>
@@ -121,7 +66,7 @@ class Control extends Component {
             </Col>
 
             <Col md={1}>
-              <Button className="btn btn-primary" onClick={() => this.handleToggleModal('tree', true)}>Tree</Button>
+              <Button className="btn btn-primary" onClick={() => this.handleToggleModal('tree')}>Tree</Button>
             </Col>
 
             <Col md={2} className="text-right">
@@ -129,164 +74,28 @@ class Control extends Component {
                 <Dropdown.Toggle variant="success" id="dropdown-basic">Create</Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => this.handleToggleModal('text', true)}>Text Record</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.handleToggleModal('audio', true)}>Audio Record</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.handleToggleModal('voice', true)}>Voice Recognition</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.handleToggleModal('text')}>Text Record</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.handleToggleModal('audio')}>Audio Record</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.handleToggleModal('voice')}>Voice Recognition</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Col>
           </Row>
         </Form>
 
-        <Modal show={text} onHide={() => this.handleToggleModal('text', false)} size={'lg'}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add new <strong className="text-warning">Text Record</strong></Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group>
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter name"
-                  onChange={this.handleInputChange}
-                  value={name}
-                  name="name"
-                  className={classNames("", {
-                    'is-invalid': errors.name
-                  })}/>
-                <span className="invalid-feedback">{errors.name}</span>
-              </Form.Group>
+        <ModalCreateRecord
+          user={user}
+          modal={modal}
+          errors={errors}
+          onCreateRecord={onCreateRecord}
+          onHandleToggleModal={this.handleToggleModal}
+        />
 
-              <Form.Group>
-                <Form.Label>{localization.what_your_mind}</Form.Label>
-                <TextEditor onChangeContent={(data) => this.setTextEditor(data)} />
-                {errors.content === 'Content field is required' && (<div className="invalid-feedback">{localization.content_required}</div>)}
-                <Form.Text className="text-muted">{localization.not_forgotten_anything}</Form.Text>
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label>Files</Form.Label>
-                <FileUpload
-                  files={files}
-                  onSetFiles={this.setFiles}
-                />
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label>Tags</Form.Label>
-                <TypeAhead
-                  tags={user.tags}
-                  selects={tags}
-                  onSetTags={this.setTags}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-
-          <Modal.Footer>
-            <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('text', false)}>Close</button>
-            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({type: 'text', name, content, files, tags});}}>Save</button>
-          </Modal.Footer>
-        </Modal>
-
-        <Modal show={audio} onHide={() => this.handleToggleModal('audio', false)} size={'lg'}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add new <strong className="text-warning">Audio Record</strong></Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group>
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter name"
-                  onChange={this.handleInputChange}
-                  value={name}
-                  name="name"
-                  className={classNames("", {
-                    'is-invalid': errors.name
-                  })}/>
-                <span className="invalid-feedback">{errors.name}</span>
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label>Record</Form.Label>
-                <Recorder
-                  onSetAudio={this.setAudio}
-                />
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label>Tags</Form.Label>
-                <TypeAhead
-                  tags={user.tags}
-                  selects={tags}
-                  onSetTags={this.setTags}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('audio', false)}>Close</button>
-            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({type: 'audio', name, blob, tags});}}>Save</button>
-          </Modal.Footer>
-        </Modal>
-
-        <Modal show={voice} onHide={() => this.handleToggleModal('voice', false)} size={'lg'}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add new <strong className="text-warning">Voice Recognition</strong></Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group>
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter name"
-                  onChange={this.handleInputChange}
-                  value={name}
-                  name="name"
-                  className={classNames("", {
-                    'is-invalid': errors.name
-                  })}/>
-                <span className="invalid-feedback">{errors.name}</span>
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label>Recognition</Form.Label>
-                <Speech
-                  onSetVoice={this.setVoice}
-                />
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label>Tags</Form.Label>
-                <TypeAhead
-                  tags={user.tags}
-                  selects={tags}
-                  onSetTags={this.setTags}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('voice', false)}>Close</button>
-            <button className="btn btn-outline-success" onClick={() => {onCreateRecord({type: 'voice', name, recognition, tags});}}>Save</button>
-          </Modal.Footer>
-        </Modal>
-
-        <Modal show={tree} onHide={() => this.handleToggleModal('tree', false)} size={'lg'}>
-          <Modal.Header closeButton>
-            <Modal.Title>Tree Records</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <TreeRecords data={treeData} />
-          </Modal.Body>
-          <Modal.Footer>
-            <button className="btn btn-outline-danger" onClick={() => this.handleToggleModal('tree', false)}>Close</button>
-          </Modal.Footer>
-        </Modal>
+        <ModalTreeRecords
+          data={treeData}
+          modal={modal}
+          onHandleToggleModal={this.handleToggleModal}
+        />
       </div>
     );
   }
@@ -295,8 +104,6 @@ class Control extends Component {
 Control.propTypes = {
   onSearchRecords: PropTypes.func.isRequired,
   onCreateRecord: PropTypes.func.isRequired,
-  onSetTreeData: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
@@ -305,8 +112,6 @@ Control.propTypes = {
 Control.defaultProps = {
   onSearchRecords: () => {},
   onCreateRecord: () => {},
-  onSetTreeData: () => {},
-  onChange: () => {},
   data: {},
   errors: {},
   user: {}
