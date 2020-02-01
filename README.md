@@ -1,5 +1,5 @@
 # Hegemony
-Description.
+Create records (text, voice, recognition) to find, browse and update them.
 
 ---
 
@@ -20,9 +20,6 @@ If the tab doesn't open on your own browser, then open your web browser to local
 
 ## API Routs
 Documentation back-end: [Postman](https://web.postman.co/collections/6630209-b3c2e365-60c1-462b-946b-c4602cb818f0?version=latest&workspace=aa8055e5-dfa9-4c7e-807a-0e3ac6ee0674)
-
-## Illustrations
-![Image alt](https://github.com/betelgeuseAS/Hegemony/raw/master/client/src/img/illustration/admin.jpg)
 
 ## Dependencies
 A brief description of each package and the function it will serve (back-end):
@@ -47,16 +44,3 @@ A brief description of each package and the function it will serve (front-end):
 * `redux-thunk`: middleware for Redux that allows us to directly access the dispatch method to make asynchronous calls from our actions
 * `redux-logger`: middleware for Redux that allows watch on store.
 * `lodash`: a modern JavaScript utility library delivering modularity, performance & extras.
-
-## Bug fixes
-* `Node Sass could not find a binding for your current environment: Windows 64-bit with Node.js 12.x`
-Fix:
-1) `npm install`
-2) `npm rebuild node-sass --force` or `npm rebuild node-sass`
-
-* `Error: Node Sass does not yet support your current environment: Windows 64-bit with Unsupported runtime (72)`
-1) `npm uninstall node-sass`
-2) `npm install node-sass`
-
-* `Another`  
-You can always use [nvm (Node Version Manager)](https://canonium.com/articles/managing-node-versions-with-windows-nvm)
