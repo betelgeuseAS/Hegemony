@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import {Nav, Navbar} from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import { logoutUser } from "../../actions/auth";
 import localization from "../localization/localization";
 
@@ -28,11 +29,15 @@ class NavBar extends Component {
               {/*<Nav.Link href="#link">Features</Nav.Link>*/}
             </Nav>
             <Nav>
-              <Nav.Link href="https://github.com/betelgeuseAS/Retrospective" target="_blank">Retrospective</Nav.Link>
               <Nav.Link href="https://github.com/betelgeuseAS/Hegemony" target="_blank">GitHub</Nav.Link>
               {
                 isAuthenticated ?
-                <button onClick={this.onLogoutClick} className="btn btn-outline-danger">{localization.logout}</button> :
+                <>
+                  <Link to="/settings">
+                    <button className="btn btn-outline-info mx-1">Settings</button>
+                  </Link>
+                  <button onClick={this.onLogoutClick} className="btn btn-outline-danger mx-1">{localization.logout}</button>
+                </> :
                 false
               }
             </Nav>

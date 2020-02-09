@@ -14,6 +14,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./components/profile/Profile";
+import Settings from "./components/profile/Settings";
 import { Localize } from "./components/localization/Localize";
 import './App.sass';
 import localization from "./components/localization/localization";
@@ -155,6 +156,7 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <Switch>
                   <PrivateRoute exact path="/profile" component={Profile} />
+                  <PrivateRoute exact path="/settings" component={Settings} />
                 </Switch>
               </div>
             </Router>

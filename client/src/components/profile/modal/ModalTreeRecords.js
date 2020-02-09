@@ -26,7 +26,7 @@ class ModalTreeRecords extends Component {
 }
 
 ModalTreeRecords.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   modal: PropTypes.string.isRequired
 };
 

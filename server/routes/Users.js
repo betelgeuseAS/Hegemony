@@ -7,6 +7,7 @@ const keys = require("../config/keys");
 // Load input validation
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
+const validateSettingsInput = require("../validation/settings");
 
 // Load User model
 const User = require("../models/User");
@@ -61,6 +62,7 @@ user.post("/login", (req, res) => {
         // Create JWT Payload
         const payload = {
           id: user.id,
+          email: user.email,
           name: user.name,
           tags: user.tags
         };
@@ -83,6 +85,26 @@ user.post("/login", (req, res) => {
           .json({ passwordincorrect: "Password incorrect" });
       }
     });
+  });
+});
+
+// POST users/settings
+user.put("/settings", (req, res) => {
+  const { errors, isValid } = validateSettingsInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  User.update({ email: req.body.email }, {
+    name: req.body.name,
+    tags: req.body.tags
+  }).then(user => {
+    if(!user) {
+      return res.status(404).send({
+        message: "User not found with email: " + req.body.email
+      });
+    }
+    res.send(user);
   });
 });
 

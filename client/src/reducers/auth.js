@@ -1,4 +1,7 @@
-import { SET_CURRENT_USER, USER_LOADING } from '../constants/constants';
+import {
+  SET_CURRENT_USER,
+  USER_LOADING,
+  UPDATE_USER } from '../constants/constants';
 const isEmpty = require("is-empty");
 
 const initialState = {
@@ -13,6 +16,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
+        user: action.payload
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
         user: action.payload
       };
     case USER_LOADING:
