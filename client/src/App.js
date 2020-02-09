@@ -65,6 +65,25 @@ axios.interceptors.response.use(function (response) {
 
 // toast:
 // Call it once in your app. At the root of your app is the best place
+// notify = () => {
+//   toast("Default Notification !");
+//   toast.success("Success Notification !", {
+//     position: toast.POSITION.TOP_CENTER
+//   });
+//   toast.error("Error Notification !", {
+//     position: toast.POSITION.TOP_LEFT
+//   });
+//   toast.warn("Warning Notification !", {
+//     position: toast.POSITION.BOTTOM_LEFT
+//   });
+//   toast.info("Info Notification !", {
+//     position: toast.POSITION.BOTTOM_CENTER
+//   });
+//   toast("Custom Style Notification with css class!", {
+//     position: toast.POSITION.BOTTOM_RIGHT,
+//     className: 'foo-bar'
+//   });
+// };
 toast.configure({
   autoClose: 3000,
   draggable: false,
