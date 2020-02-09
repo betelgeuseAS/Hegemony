@@ -6,6 +6,7 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/auth";
 import { store } from	'./store/configureStore';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import moment from "moment";
 import NavBar from "./components/layout/NavBar";
@@ -66,7 +67,8 @@ axios.interceptors.response.use(function (response) {
 // Call it once in your app. At the root of your app is the best place
 toast.configure({
   autoClose: 3000,
-  draggable: false
+  draggable: false,
+  className: 'custom-toaster'
 });
 
 class App extends Component {

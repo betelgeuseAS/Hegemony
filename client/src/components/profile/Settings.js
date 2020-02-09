@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { updateSettings } from "../../actions/settings";
 import localization from "../localization/localization";
 import classnames from "classnames";
-import {TypeAhead} from "../typeAhead/TypeAhead";
+import { TypeAhead } from "../typeAhead/TypeAhead";
 
 class Settings extends Component {
   constructor(props) {
