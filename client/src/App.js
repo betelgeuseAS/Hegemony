@@ -172,6 +172,8 @@ class App extends Component {
             <Router>
               <div className="app">
                 <NavBar componentLocalize={<Localize onSetLanguage={(language) => this.setLanguage(language)} />} />
+                {/*<NavBar componentLocalize={<Localize />} /> Need to convey Localize if set language is not this component*/}
+
                 <Route exact path="/" component={Landing} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
