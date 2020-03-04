@@ -37,13 +37,12 @@ class Control extends Component {
     const {date, modal} = this.state;
 
     return (
-      <div>
+      <div className="control">
         <Form className="text-left">
           <Row>
-            <Col md={2}>
+            <Col md={8}>
               <Form.Label className="mt-2">{localization.search_records}:</Form.Label>
-            </Col>
-            <Col md={6}>
+
               <Form.Control
                 type="text"
                 placeholder="Type something"
@@ -53,25 +52,27 @@ class Control extends Component {
               <Form.Text className="text-muted">
                 <p>Search by name</p>
               </Form.Text>
-            </Col>
 
-            <Col md={1}>
               <Dropdown>
                 <Dropdown.Toggle as={CustomToggle} id="dropdown-basic">test</Dropdown.Toggle>
 
                 <Dropdown.Menu>
                   <DatePicker className="form-control" onDayPickerChange={(date, {selected}) => this.handleDayPickerChange(date, {selected})} date={date} />
                 </Dropdown.Menu>
+
+                <Form.Text className="text-muted">
+                  <p>Search by date</p>
+                </Form.Text>
               </Dropdown>
             </Col>
 
-            <Col md={1}>
-              <Button className="btn btn-primary" onClick={() => this.handleToggleModal('tree')}>Tree</Button>
-            </Col>
+            <Col md={4} className="text-left">
+              <Form.Label className="mt-2">Control:</Form.Label>
 
-            <Col md={2} className="text-right">
+              <Button className="btn btn-primary btn-block mb-3" onClick={() => this.handleToggleModal('tree')}>Tree</Button>
+
               <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">Create</Dropdown.Toggle>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" className="btn-block">Create</Dropdown.Toggle>
 
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => this.handleToggleModal('text')}>Text Record</Dropdown.Item>
