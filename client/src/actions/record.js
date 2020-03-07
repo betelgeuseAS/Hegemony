@@ -6,6 +6,7 @@ import {
   DELETE_RECORD,
   UPDATE_RECORD,
   SEARCH_RECORD,
+  SEARCH_RECORD_BY_DATE,
   GET_ERRORS,
   FETCH_TREE} from "../constants/constants";
 
@@ -84,6 +85,22 @@ export const searchRecords = (data) => dispatch => {
     .then(res => {
       dispatch({
         type: SEARCH_RECORD,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+export const searchRecordsByDate = (date) => dispatch => {
+  axios.post(`/records/search/date`, {search: date})
+    .then(res => {
+      dispatch({
+        type: SEARCH_RECORD_BY_DATE,
         payload: res.data
       });
     })

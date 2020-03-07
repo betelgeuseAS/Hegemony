@@ -140,6 +140,19 @@ record.post('/search', (req, res) => {
     });
 });
 
+// POST records/search/date
+record.post('/search/date', (req, res) => {
+  Record.find({createdAt: { $gte: new Date(req.body.search) }})
+    .then(records => {
+      res.send(records);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Nothing was found"
+      });
+    });
+});
+
 // GET records/tree
 record.get('/tree', (req, res) => {
   let dateRecords = [], tree = [];

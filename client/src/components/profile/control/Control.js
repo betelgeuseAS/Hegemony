@@ -13,28 +13,16 @@ class Control extends Component {
     super(props);
     this.state = {
       modal: '',
-      date: undefined, //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
     };
   }
-
-  handleDayPickerChange = (date, {selected}) => {
-    if (selected) {
-      // Unselect the day if already selected:
-      this.setState({date: undefined});
-      return;
-    }
-    this.setState({
-      date: date
-    });
-  };
 
   handleToggleModal = (modal) => {
     this.setState({modal});
   };
 
   render() {
-    const {onSearchRecords, onCreateRecord, errors, user, tree: treeData} = this.props;
-    const {date, modal} = this.state;
+    const {onSearchRecords, onCreateRecord, onSearchRecordsByDate, errors, user, tree: treeData, date} = this.props;
+    const {modal} = this.state;
 
     return (
       <div className="control">
@@ -57,7 +45,7 @@ class Control extends Component {
                 <Dropdown.Toggle as={CustomToggle} id="dropdown-basic">test</Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <DatePicker className="form-control" onDayPickerChange={(date, {selected}) => this.handleDayPickerChange(date, {selected})} date={date} />
+                  <DatePicker className="form-control" onDayPickerChange={(date, {selected}) => onSearchRecordsByDate(date, {selected})} date={date} />
                 </Dropdown.Menu>
 
                 <Form.Text className="text-muted">
@@ -104,18 +92,22 @@ class Control extends Component {
 
 Control.propTypes = {
   onSearchRecords: PropTypes.func.isRequired,
+  onSearchRecordsByDate: PropTypes.func.isRequired,
   onCreateRecord: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  date: PropTypes.any
 };
 
 Control.defaultProps = {
   onSearchRecords: () => {},
+  onSearchRecordsByDate: () => {},
   onCreateRecord: () => {},
   data: {},
   errors: {},
-  user: {}
+  user: {},
+  date: undefined
 };
 
 export default Control;

@@ -4,6 +4,7 @@ import {
   UPDATE_RECORD,
   DELETE_RECORD,
   SEARCH_RECORD,
+  SEARCH_RECORD_BY_DATE,
   FETCH_TREE } from '../constants/constants';
 
 const initialState = [];
@@ -23,6 +24,8 @@ export const record = (state = initialState, action) => {
     case DELETE_RECORD:
       return state.filter(({ _id }) => _id !== action.payload);
     case SEARCH_RECORD:
+      return action.payload;
+    case SEARCH_RECORD_BY_DATE:
       return action.payload;
     default:
       return state;

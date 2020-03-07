@@ -8,6 +8,7 @@ import {
   deleteRecord,
   updateRecord,
   searchRecords,
+  searchRecordsByDate,
   fetchTree
 } from "../../actions/record";
 import Control from "./control/Control";
@@ -22,6 +23,7 @@ class Profile extends Component {
       openAlert: true,
       errors: {},
       search: '',
+      date: undefined, //new Date(2018, 1, 19), moment()._d, //Thu Jul 04 2019 22:44:10 GMT+0300 (Eastern European Summer Time)  - should be that format.
     }
   }
 
@@ -68,9 +70,23 @@ class Profile extends Component {
     this.props.searchRecords({search: searchRecords});
   }, 1000);
 
+  searchRecordsByDate = (date, {selected}) => {
+    if (selected) {
+      // Unselect the day if already selected:
+      this.setState({date: undefined});
+      this.props.fetchRecords();
+      return;
+    }
+    this.setState({
+      date: date
+    });
+
+    this.props.searchRecordsByDate(date);
+  };
+
   render() {
     const { auth: {user}, records, tree } = this.props;
-    const { openAlert, search, errors } = this.state;
+    const { openAlert, search, errors, date } = this.state;
 
     return (
       <div>
@@ -84,10 +100,12 @@ class Profile extends Component {
 
         <Control
           onSearchRecords={this.searchRecords}
+          onSearchRecordsByDate={this.searchRecordsByDate}
           onCreateRecord={this.createRecord}
           tree={tree}
           errors={errors}
           user={user}
+          date={date}
         />
 
         <RecordContext.Provider value={{
@@ -127,6 +145,7 @@ Profile.defaultProps = {
   deleteRecord: () => {},
   updateRecord: () => {},
   searchRecords: () => {},
+  searchRecordsByDate: () => {},
   fetchTree: () => {},
   records: [],
   errors: {},
@@ -147,6 +166,7 @@ const	mapDispatchToProps = dispatch	=> ({
   deleteRecord: (id) => dispatch(deleteRecord(id)),
   updateRecord: (data, id) => dispatch(updateRecord(data, id)),
   searchRecords: (str) => dispatch(searchRecords(str)),
+  searchRecordsByDate: (date) => dispatch(searchRecordsByDate(date)),
   fetchTree: (data) => dispatch(fetchTree(data))
 });
 
