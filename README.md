@@ -4,7 +4,7 @@ Create records (text, voice, recognition) to find, browse and update them.
 ---
 
 ## Technologies
-* `HTML` / `*`
+* `HTML`
 * `CSS` / `Sass`
 * `React` / `Redux`
 * `Node` / `Express` / `Mongoose`
