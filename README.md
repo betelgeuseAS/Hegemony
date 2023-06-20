@@ -20,10 +20,3 @@ If the tab doesn't open on your own browser, then open your web browser to local
 
 ## API Routs
 Documentation back-end: [Postman](https://web.postman.co/collections/6630209-b3c2e365-60c1-462b-946b-c4602cb818f0?version=latest&workspace=aa8055e5-dfa9-4c7e-807a-0e3ac6ee0674)
-
-## Illustrations
-![](/client/illustrations/01.jpg)
-![](/client/illustrations/02.jpg)
-![](/client/illustrations/03.jpg)
-![](/client/illustrations/04.jpg)
-![](/client/illustrations/05.jpg)
